@@ -96,10 +96,13 @@ setupFilterResetEvent(
 );
 
 export function selectStartEvent(place_id, place_name, toggle = true) {
-  selectedFirstLocation = place_id;
-  if (toggle) {
+  console.log(place_id, place_name);
+  if (place_id === "") {
+    hidePill();
+  }else{
     showPill(place_name);
   }
+  selectedFirstLocation = place_id;
 }
 
 const clearExistingRoute = () => {
@@ -258,6 +261,7 @@ setupModalExitButtonEvents(() => {
 setupSearchBoxEvents(async (e) => {
   let inputVal = e.target.value;
   if (inputVal in cityPoints) {
+    hidePill();
     flyToLocation(cityPoints[inputVal]);
     currentLocation = inputVal;
     clearExistingRoute();

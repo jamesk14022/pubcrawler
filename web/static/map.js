@@ -61,10 +61,10 @@ export function renderAlternativeAttractionMarkers(waypoints) {
 }
 
 async function buildAlternativeAttractionMarkerPopupDescription(waypoint) {
-  const photoResult = await getGoogleMapsPhoto(
-    JSON.parse(waypoint.photos)[0].photo_reference,
-  );
-  const imageSrc = `data:image/jpeg;base64,${photoResult.body}`;
+  // const photoResult = await getGoogleMapsPhoto(
+  //   JSON.parse(waypoint.photos)[0].photo_reference,
+  // );
+  // const imageSrc = `data:image/jpeg;base64,${photoResult.body}`;
 
   let description = `<strong>${waypoint.name}</strong>`;
   if (waypoint.rating !== 0) {
@@ -144,13 +144,11 @@ export async function setupRenderAlternativeAttractionMarkersPopup() {
     // Populate the popup and set its coordinates
     // based on the feature found.
     popup.setLngLat(coordinates).setHTML(description).addTo(map);
-
-    popup.on("open", () => {
-      const buttons = document.querySelectorAll(".select-start-button"); // Select all buttons with the class
-      buttons.forEach((button) => {
-        button.addEventListener("click", (event) => {
-          selectStartEvent(event.target.dataset.id, event.target.dataset.name);
-        });
+    const buttons = document.querySelectorAll(".select-start-button"); // Select all buttons with the class
+    buttons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        console.log("Clicked");
+        selectStartEvent(event.target.dataset.id, event.target.dataset.name);
       });
     });
   });

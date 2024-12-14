@@ -138,9 +138,7 @@ export function setupSearchBoxEvents(onKeyPress) {
 const openSidebar = () => (
   sidebar.classList.toggle("hidden"), secondaryBar.classList.toggle("hidden")
 );
-// const closeSidebar = () => (sidebar.style.width = "0");
 sidebarToggle.addEventListener("click", openSidebar);
-// closeBtn.addEventListener("click", closeSidebar);
 
 export function clearCityList() {
   dataList.innerHTML = "";
@@ -159,14 +157,15 @@ export function setFirstLocationText(text) {
 }
 
 export function showPill(bar_start) {
+  console.log("bar_start", bar_start);
   setFirstLocationText("Starting location: ");
-  document.querySelector("#start-pill").classList.toggle("hidden");
+  document.querySelector("#start-pill").classList.remove("hidden");
   document.getElementById("pill-text").innerHTML = bar_start;
 }
 
 export function hidePill() {
   setFirstLocationText("No starting location set");
-  document.querySelector("#start-pill").classList.toggle("hidden");
+  document.querySelector("#start-pill").classList.add("hidden");
 }
 
 export function clearBarInformationBox() {
