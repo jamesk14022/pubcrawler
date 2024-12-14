@@ -2,7 +2,6 @@ import { INITIAL_LOCATION, MAPBOX_TOKEN, TIME_SPENT_BAR } from "./constants.js";
 import { setRouteLength, setRouteDuration } from "./ui.js";
 import { convertToGeoJSON } from "./utils.js";
 import { selectStartEvent } from "./client.js";
-import { getGoogleMapsPhoto } from "./api.js";
 
 // token scoped and safe for FE use
 mapboxgl.accessToken = MAPBOX_TOKEN;
@@ -13,7 +12,6 @@ export const map = new mapboxgl.Map({
   center: INITIAL_LOCATION,
   zoom: 12,
 });
-
 
 const directions = new MapboxDirections({
   accessToken: mapboxgl.accessToken,
@@ -120,7 +118,7 @@ export async function setupRenderAlternativeAttractionMarkersPopup() {
         popup.remove();
         map.getCanvas().style.cursor = "";
       }
-    }, 100); // Adjust timeout (ms) as needed
+    }, 100);
   }
 
   map.on("mouseenter", "places", async (e) => {

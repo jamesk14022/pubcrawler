@@ -44,7 +44,6 @@ let currentMarkers = [];
 let selectedFirstLocation = "";
 let selectedPubs = 3;
 let selectedAttractions = 1;
-let currentCityPoints = [];
 let cityPoints = {};
 
 setupShareButtonEvents(() => {
@@ -85,21 +84,19 @@ setupAttractionPlusMinusEvents(
   },
 );
 
-setupFilterResetEvent(
-  () => {
-    selectedAttractions = 1;
-    setAttractionDisplay(selectedAttractions);
+setupFilterResetEvent(() => {
+  selectedAttractions = 1;
+  setAttractionDisplay(selectedAttractions);
 
-    selectedPubs = 3;
-    setMarkersDisplay(selectedPubs);
-  },
-);
+  selectedPubs = 3;
+  setMarkersDisplay(selectedPubs);
+});
 
 export function selectStartEvent(place_id, place_name, toggle = true) {
   console.log(place_id, place_name);
   if (place_id === "") {
     hidePill();
-  }else{
+  } else {
     showPill(place_name);
   }
   selectedFirstLocation = place_id;
@@ -118,10 +115,7 @@ const clearExistingRoute = () => {
 };
 
 function copyShareLink() {
-  // Get the current URL
-  let url = window.location.href;
-  // Copy the URL to the clipboard
-  copy(url);
+  copy(window.location.href);
   setShareButtonCopied();
 }
 
@@ -143,7 +137,6 @@ async function addAlternativeBarMarkers(route_points) {
         route_points.map((x) => x.place_id),
       ),
   );
-  currentCityPoints = cityPoints;
   renderAlternativeAttractionMarkers(cityPoints);
   await setupRenderAlternativeAttractionMarkersPopup();
 }

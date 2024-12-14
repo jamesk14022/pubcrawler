@@ -19,16 +19,9 @@ import {
   sidebar,
   sidebarToggle,
   secondaryBar,
-  // closeBtn,
 } from "./constants.js";
 
 import { buildGoogleMapsUrl } from "./api.js";
-
-// document.addEventListener("click", function (event) {
-//   if (!sidebar.contains(event.target) && event.target !== sidebarToggle) {
-//     closeSidebar();
-//   }
-// });
 
 export const setAttractionDisplay = (attractions) => {
   attractionCounter.forEach((element) => {
@@ -106,9 +99,7 @@ export function setupAttractionPlusMinusEvents(
   });
 }
 
-export function setupFilterResetEvent(
-  onFilterReset,
-) {
+export function setupFilterResetEvent(onFilterReset) {
   filterReset.forEach((btn) => {
     btn.addEventListener("click", () => {
       onFilterReset();
@@ -135,11 +126,6 @@ export function setupSearchBoxEvents(onKeyPress) {
   searchBox.addEventListener("input", onKeyPress);
 }
 
-const openSidebar = () => (
-  sidebar.classList.toggle("hidden"), secondaryBar.classList.toggle("hidden")
-);
-sidebarToggle.addEventListener("click", openSidebar);
-
 export function clearCityList() {
   dataList.innerHTML = "";
 }
@@ -157,7 +143,6 @@ export function setFirstLocationText(text) {
 }
 
 export function showPill(bar_start) {
-  console.log("bar_start", bar_start);
   setFirstLocationText("Starting location: ");
   document.querySelector("#start-pill").classList.remove("hidden");
   document.getElementById("pill-text").innerHTML = bar_start;
