@@ -15,4 +15,4 @@ format:
 	npx prettier --write . --ignore-path .prettierignore 
 
 tailwind:
-	npx tailwindcss -i ./styles.css -o ./output.css --watch
+	cd web/static && npx tailwindcss -i ./styles.css -o ./output.css --watch
