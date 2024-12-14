@@ -6,11 +6,11 @@ import os
 
 import numpy as np
 
-cities = ["berlin"]
+cities = ["manchester"]
 
 
 BASE_PATH = "../scrape_test/"
-SEARCH_RADIUS = 1500
+SEARCH_RADIUS = 1000
 
 GOOGLE_MAPS_BASE_URL = "https://maps.googleapis.com/maps/api/"
 GOOGLE_MAPS_NEXT_PAGE_DELAY = 2.5
@@ -37,12 +37,12 @@ def walking_distance(start_latitude, start_longitude, end_latitude, end_longitud
     return route["distance"] / 1000, route
 
 
-def load_location_search():
-    with open(
-        "new_info.json", "rb"
-    ) as f:  # "rb" because we want to read in binary mode
-        state = json.loads(f.read())
-    return state
+# def load_location_search():
+#     with open(
+#         "new_info.json", "rb"
+#     ) as f:  # "rb" because we want to read in binary mode
+#         state = json.loads(f.read())
+#     return state
 
 def make_nearby_search_request(coords, radius, next_page_token, location_type="pub"):
 
@@ -77,9 +77,8 @@ def location_search(coords, radius):
 
     results = []
     for location_type in ["pub", "tourist_attraction"]:
-        results += make_nearby_search_request(coords, radius, None, location_type)
-        results += make_nearby_search_request(coords, radius, None, location_type)
-
+        results += make_nearby_search_request(coords, radius, None, location_type)[:50]
+ 
     return results
 
 def build_matrices(state):

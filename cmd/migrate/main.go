@@ -1,17 +1,83 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"os"
 
 	dbprovider "github.com/jamesk14022/barcrawler/database"
-	handlers "github.com/jamesk14022/barcrawler/handlers"
+	types "github.com/jamesk14022/barcrawler/types"
 )
 
-func main() {
-	locations := handlers.CheckAvailableLocations()
-	for location, _ := range locations {
+type DistanceMatrix [][]float64
+type RoutesMatrix [][]types.Route
 
-		enrichedData, R, _ := handlers.LoadLocationInformation(location)
+type Geometry struct {
+	Coordinates [][]float64 `json:"coordinates"`
+}
+
+type Route struct {
+	Geometry Geometry `json:"geometry"`
+	City     string   `json:"city"`
+	Point1   string   `json:"point1"`
+	Point2   string   `json:"point2"`
+}
+
+type PlaceIDs struct {
+	PlaceIDs []string `json:"place_ids"`
+}
+
+type Location struct {
+	ID     string   `json:"place_id"`
+	Name   string   `json:"name"`
+	Price  float32  `json:"price_level"`
+	Rating float32  `json:"rating"`
+	Types  []string `json:"types"`
+	Photos []struct {
+		PhotoReference string `json:"photo_reference"`
+	} `json:"photos"`
+	Geometry struct {
+		Location struct {
+			Latitude  float64 `json:"lat"`
+			Longitude float64 `json:"lng"`
+		}
+	}
+}
+
+var locationDataDir = os.Getenv("LOCATION_DATA_DIR")
+
+func getLocationData(location string) ([]types.Place, DistanceMatrix, RoutesMatrix, error) {
+	var enrichedData []types.Place
+	var D DistanceMatrix
+	var R RoutesMatrix
+
+	file, err := os.ReadFile(locationDataDir + location + "/info.json")
+	if err != nil {
+		fmt.Println("Error reading file", err)
+	}
+	json.Unmarshal(file, &enrichedData)
+
+	file, err = os.ReadFile(locationDataDir + location + "/D.json")
+	if err != nil {
+		fmt.Println("Error reading file", err)
+	}
+	json.Unmarshal(file, &D)
+
+	file, err = os.ReadFile(locationDataDir + location + "/R.json")
+	if err != nil {
+		fmt.Println("Error reading file", err)
+	}
+	json.Unmarshal(file, &R)
+
+	return enrichedData, D, R, nil
+}
+
+func main() {
+	locations := []string{"manchester", "brussels", "berlin"}
+
+	for _, location := range locations {
+
+		enrichedData, _, R, _ := getLocationData(location)
 
 		for _, place := range enrichedData {
 

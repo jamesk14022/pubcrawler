@@ -227,7 +227,6 @@ func (mgr *manager) FindUniqueCities() []string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Cities found: ", cities)
 
 	listedCities := make([]string, len(cities))
 	for i, v := range cities {
