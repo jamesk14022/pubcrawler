@@ -145,7 +145,6 @@ export async function setupRenderAlternativeAttractionMarkersPopup() {
     const buttons = document.querySelectorAll(".select-start-button"); // Select all buttons with the class
     buttons.forEach((button) => {
       button.addEventListener("click", (event) => {
-        console.log("Clicked");
         selectStartEvent(event.target.dataset.id, event.target.dataset.name);
       });
     });

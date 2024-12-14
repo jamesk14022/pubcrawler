@@ -92,8 +92,7 @@ setupFilterResetEvent(() => {
   setMarkersDisplay(selectedPubs);
 });
 
-export function selectStartEvent(place_id, place_name, toggle = true) {
-  console.log(place_id, place_name);
+export function selectStartEvent(place_id, place_name) {
   if (place_id === "") {
     hidePill();
   } else {
@@ -229,7 +228,7 @@ function addCityLocations() {
 }
 
 setupPillClosedEvents(async () => {
-  selectStartEvent("", "", false);
+  selectStartEvent("", "");
   hidePill();
 });
 

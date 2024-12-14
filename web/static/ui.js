@@ -107,6 +107,11 @@ export function setupFilterResetEvent(onFilterReset) {
   });
 }
 
+const openSidebar = () => (
+  sidebar.classList.toggle("hidden"), secondaryBar.classList.toggle("hidden")
+);
+sidebarToggle.addEventListener("click", openSidebar);
+
 export function setupRefreshButtonEvents(onRefreshButtonClicked) {
   refreshButton.addEventListener("click", onRefreshButtonClicked);
 }
