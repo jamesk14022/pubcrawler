@@ -51,19 +51,19 @@ func getLocationData(location string) ([]types.Place, DistanceMatrix, RoutesMatr
 	var D DistanceMatrix
 	var R RoutesMatrix
 
-	file, err := os.ReadFile(locationDataDir + location + "/info.json")
+	file, err := os.ReadFile("/Users/james/Documents/code/barcrawler/scrape_test/paris/info.json")
 	if err != nil {
 		fmt.Println("Error reading file", err)
 	}
 	json.Unmarshal(file, &enrichedData)
 
-	file, err = os.ReadFile(locationDataDir + location + "/D.json")
+	file, err = os.ReadFile("/Users/james/Documents/code/barcrawler/scrape_test/paris/D.json")
 	if err != nil {
 		fmt.Println("Error reading file", err)
 	}
 	json.Unmarshal(file, &D)
 
-	file, err = os.ReadFile(locationDataDir + location + "/R.json")
+	file, err = os.ReadFile("/Users/james/Documents/code/barcrawler/scrape_test/paris/R.json")
 	if err != nil {
 		fmt.Println("Error reading file", err)
 	}
@@ -73,7 +73,7 @@ func getLocationData(location string) ([]types.Place, DistanceMatrix, RoutesMatr
 }
 
 func main() {
-	locations := []string{"manchester", "brussels", "berlin"}
+	locations := []string{"paris"}
 
 	for _, location := range locations {
 
