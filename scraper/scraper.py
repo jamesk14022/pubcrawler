@@ -6,7 +6,7 @@ import os
 
 import numpy as np
 
-cities = ["manchester"]
+cities = ["paris"]
 
 
 BASE_PATH = "../scrape_test/"
