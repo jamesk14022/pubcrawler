@@ -92,13 +92,9 @@ func LoadLocationInformation(location string) ([]Place, []Route, error) {
 }
 
 func CheckOverlap(path []string) bool {
-
-	// fmt.Println("Checking overlap", path)
-
 	localPoints := make(map[[2]float64]bool)
 	for i := 0; i < len(path)-1; i++ {
 		route := dbprovider.Mgr.FindCachedRouteBetweenPlaces(path[i], path[i+1])
-		// fmt.Println("Route", route)
 		if route.Distance == 0 {
 			return true
 		}
