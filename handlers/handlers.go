@@ -14,6 +14,7 @@ import (
 	"strings"
 
 	// . "github.com/jamesk14022/barcrawler/cache"
+	config "github.com/jamesk14022/barcrawler/config"
 	dbprovider "github.com/jamesk14022/barcrawler/database"
 	"github.com/jamesk14022/barcrawler/types"
 	. "github.com/jamesk14022/barcrawler/types"
@@ -23,31 +24,8 @@ import (
 const MaxReturnPaths = 20000000
 
 var locationDataDir = os.Getenv("LOCATION_DATA_DIR")
-
-var markerSettings = map[int]map[string]float64{
-	3: {
-		"distanceThreshold": 0.9,
-		"mu":                1.1,
-		"alpha":             1.1,
-	},
-	4: {
-		"distanceThreshold": 0.9,
-		"mu":                1.1,
-		"alpha":             1.1,
-	},
-	5: {
-		"distanceThreshold": 1.6,
-		"mu":                1.3,
-		"alpha":             1.3,
-	},
-	6: {
-		"distanceThreshold": 1.6,
-		"mu":                1.3,
-		"alpha":             1.3,
-	},
-}
-
 var emptyResponse = make([]Place, 0)
+var cm = config.NewConfigManager()
 
 func CheckAvailableLocations() map[string][2]float64 {
 
@@ -156,6 +134,7 @@ func checkAttractionContraints(path []int, enrichedData []Place, targetAttractio
 
 func getEligiblePaths(size int, targetPubs int, targetAttractions int, enrichedData []Place) ([][]string, []float64) {
 
+	var city = enrichedData[0].City
 	var eligiblePaths [][]int
 	var distances []float64
 	var totalTargetLength = targetPubs + targetAttractions
@@ -169,7 +148,7 @@ func getEligiblePaths(size int, targetPubs int, targetAttractions int, enrichedD
 			return
 		}
 		if depth == totalTargetLength {
-			if currentDist < markerSettings[totalTargetLength]["distanceThreshold"] && checkAttractionContraints(path, enrichedData, targetAttractions) {
+			if currentDist < cm.GetConfig(city)[totalTargetLength]["distanceThreshold"] && checkAttractionContraints(path, enrichedData, targetAttractions) {
 				pathCopy := make([]int, totalTargetLength)
 				copy(pathCopy, path[:depth])
 				eligiblePaths = append(eligiblePaths, pathCopy)
@@ -178,7 +157,7 @@ func getEligiblePaths(size int, targetPubs int, targetAttractions int, enrichedD
 			return
 		}
 
-		if currentDist > markerSettings[totalTargetLength]["distanceThreshold"] {
+		if currentDist > cm.GetConfig(city)[totalTargetLength]["distanceThreshold"] {
 			return
 		}
 
@@ -338,6 +317,7 @@ func GetRandomCrawl(w http.ResponseWriter, r *http.Request) {
 
 func generateRoute(enrichedData []Place, targetPubs int, targetAttractions int, targetFirstLocation string) [][]string {
 
+	city := enrichedData[0].City
 	size := len(enrichedData)
 	eligiblePaths, distances := getEligiblePaths(size, targetPubs, targetAttractions, enrichedData)
 	if targetFirstLocation != "" {
@@ -351,11 +331,11 @@ func generateRoute(enrichedData []Place, targetPubs int, targetAttractions int, 
 	})
 
 	eligiblePaths = filterPaths(eligiblePaths, func(e []string) bool {
-		return AdjacentLengthMeetConstraint(e, enrichedData[0].City, markerSettings[targetPubs+targetAttractions]["mu"])
+		return AdjacentLengthMeetConstraint(e, enrichedData[0].City, cm.GetConfig(city)[targetPubs+targetAttractions]["mu"])
 	})
 
 	eligiblePaths = filterPathsDistances(eligiblePaths, distances, func(e []string, f float64) bool {
-		return EqualLengthMeetConstraint(e, f, markerSettings[targetPubs+targetAttractions]["alpha"])
+		return EqualLengthMeetConstraint(e, f, cm.GetConfig(city)[targetPubs+targetAttractions]["alpha"])
 	})
 
 	return eligiblePaths
