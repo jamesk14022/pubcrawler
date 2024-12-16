@@ -154,8 +154,6 @@ func (mgr *manager) buildDistanceCache() {
 	distanceMap := make(map[string]map[string]types.Route)
 	uniqueCities := Mgr.FindUniqueCities()
 
-	// uniqueCities := []string{"dublin"}
-
 	for _, city := range uniqueCities {
 
 		routes := Mgr.FindRoutesByCity(city)

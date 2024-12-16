@@ -69,7 +69,7 @@ setupPubPlusMinusEvents(
 
 setupAttractionPlusMinusEvents(
   () => {
-    if (selectedAttractions === 1.0) {
+    if (selectedAttractions === 0) {
       return;
     }
     selectedAttractions -= 1;

@@ -60,19 +60,11 @@ func CheckAvailableLocations() map[string][2]float64 {
 	if err := json.Unmarshal(jsonFile, &cityCoordinates); err != nil {
 		log.Fatal(err)
 	}
-	files, err := os.ReadDir(locationDataDir)
-	if err != nil {
-		log.Fatal(err)
-	}
 
-	names := make([]string, len(files))
-	for i := range files {
-		if files[i].IsDir() {
-			names[i] = files[i].Name()
-		}
-	}
+	// get all cities in the database
+	dbCities := dbprovider.Mgr.FindUniqueCities()
 	for key := range cityCoordinates {
-		if !utils.Contains(names, strings.ToLower(key)) {
+		if !utils.Contains(dbCities, strings.ToLower(key)) {
 			delete(cityCoordinates, key)
 		}
 	}
