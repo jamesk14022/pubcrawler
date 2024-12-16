@@ -149,7 +149,9 @@ func (mgr *manager) FindRoutesByCity(city string) []types.Route {
 
 func (mgr *manager) buildDistanceCache() {
 	distanceMap := make(map[string]map[string]types.Route)
-	uniqueCities := Mgr.FindUniqueCities()
+	// uniqueCities := Mgr.FindUniqueCities()
+
+	uniqueCities := []string{"dublin"}
 
 	for _, city := range uniqueCities {
 
@@ -157,10 +159,18 @@ func (mgr *manager) buildDistanceCache() {
 
 		for _, r := range routes {
 
-			if _, ok := distanceMap[r.Point1]; !ok {
-				distanceMap[r.Point1] = make(map[string]types.Route)
+			if r.Point1 <= r.Point2 {
+				if _, ok := distanceMap[r.Point1]; !ok {
+					distanceMap[r.Point1] = make(map[string]types.Route)
+				}
+				distanceMap[r.Point1][r.Point2] = r
+			} else {
+				if _, ok := distanceMap[r.Point2]; !ok {
+					distanceMap[r.Point2] = make(map[string]types.Route)
+				}
+				distanceMap[r.Point2][r.Point1] = r
 			}
-			distanceMap[r.Point1][r.Point2] = r
+
 		}
 
 	}
@@ -169,12 +179,17 @@ func (mgr *manager) buildDistanceCache() {
 }
 
 func (mgr *manager) FindCachedRouteBetweenPlaces(start_placeID string, end_placeID string) types.Route {
+
+	var route types.Route
+
 	if start_placeID <= end_placeID {
-		return mgr.DistanceCache[start_placeID][end_placeID]
+		route = mgr.DistanceCache[start_placeID][end_placeID]
 	} else {
-		return mgr.DistanceCache[end_placeID][start_placeID]
+		route = mgr.DistanceCache[end_placeID][start_placeID]
 	}
 
+	fmt.Println("Finding cached route between ", start_placeID, " and ", end_placeID, "...", route)
+	return route
 }
 
 func (mgr *manager) FindPlaceByID(placeID string) types.Place {
