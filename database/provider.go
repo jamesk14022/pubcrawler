@@ -121,41 +121,45 @@ func (mgr *manager) FindRoutesByCity(city string) []types.Route {
 	}
 
 	collection := mgr.client.Database("dev").Collection("routes")
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 1000*time.Second)
 	defer cancel()
 
-	var results []types.Route
 	filter := bson.D{{"city", city}}
 	cur, err := collection.Find(ctx, filter)
-	if errors.Is(err, mongo.ErrNoDocuments) {
-		log.Fatal(err)
-		return []types.Route{}
-	} else if err != nil {
-		log.Fatal(err)
+	if err != nil {
+		log.Fatal(err) // Log and exit on a genuine error
 	}
 	defer cur.Close(ctx)
+
+	var results []types.Route // Ensure results is initialized as an empty slice
+
 	for cur.Next(ctx) {
 		var route_result types.Route
 		if err := cur.Decode(&route_result); err != nil {
-			log.Fatal(err)
+			log.Printf("Failed to decode document: %v", err)
+			continue
 		}
 		results = append(results, route_result)
 	}
 
-	mgr.cache.Set(city, results, cache.DefaultExpiration)
+	if err := cur.Err(); err != nil {
+		log.Fatal(err) // Catch any cursor errors
+	}
 
+	mgr.cache.Set(city, results, cache.DefaultExpiration)
 	return results
 }
 
 func (mgr *manager) buildDistanceCache() {
 	distanceMap := make(map[string]map[string]types.Route)
-	// uniqueCities := Mgr.FindUniqueCities()
+	uniqueCities := Mgr.FindUniqueCities()
 
-	uniqueCities := []string{"dublin"}
+	// uniqueCities := []string{"dublin"}
 
 	for _, city := range uniqueCities {
 
 		routes := Mgr.FindRoutesByCity(city)
+		fmt.Println("found ", len(routes), " routes for ", city)
 
 		for _, r := range routes {
 
@@ -163,11 +167,13 @@ func (mgr *manager) buildDistanceCache() {
 				if _, ok := distanceMap[r.Point1]; !ok {
 					distanceMap[r.Point1] = make(map[string]types.Route)
 				}
+				// fmt.Println("Adding route between ", r.Point1, " and ", r.Point2, "...", r)
 				distanceMap[r.Point1][r.Point2] = r
 			} else {
 				if _, ok := distanceMap[r.Point2]; !ok {
 					distanceMap[r.Point2] = make(map[string]types.Route)
 				}
+				// fmt.Println("Adding route between ", r.Point2, " and ", r.Point1, "...", r)
 				distanceMap[r.Point2][r.Point1] = r
 			}
 
@@ -179,17 +185,12 @@ func (mgr *manager) buildDistanceCache() {
 }
 
 func (mgr *manager) FindCachedRouteBetweenPlaces(start_placeID string, end_placeID string) types.Route {
-
 	var route types.Route
-
-	if start_placeID <= end_placeID {
-		route = mgr.DistanceCache[start_placeID][end_placeID]
+	if route = mgr.DistanceCache[start_placeID][end_placeID]; route.Distance != 0 {
+		return route
 	} else {
-		route = mgr.DistanceCache[end_placeID][start_placeID]
+		return mgr.DistanceCache[end_placeID][start_placeID]
 	}
-
-	fmt.Println("Finding cached route between ", start_placeID, " and ", end_placeID, "...", route)
-	return route
 }
 
 func (mgr *manager) FindPlaceByID(placeID string) types.Place {
