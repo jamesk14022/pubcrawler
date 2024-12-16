@@ -4,6 +4,9 @@ build:
 run:
 	go run cmd/api/main.go
 
+scrape:
+	go run cmd/scraper/main.go
+
 tune:
 	go run tuning/parameter_tuning.go
 

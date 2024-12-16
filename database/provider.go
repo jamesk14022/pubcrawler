@@ -54,7 +54,7 @@ func init() {
 func (mgr *manager) AddPlace(place *types.Place) (InsertedID interface{}) {
 
 	collection := mgr.client.Database("dev").Collection("places")
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
 	doc, err := bson.Marshal(place)
@@ -73,7 +73,7 @@ func (mgr *manager) AddPlace(place *types.Place) (InsertedID interface{}) {
 func (mgr *manager) AddRoute(route *types.Route) (InsertedID interface{}) {
 
 	collection := mgr.client.Database("dev").Collection("routes")
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
 	doc, err := bson.Marshal(route)
@@ -92,7 +92,7 @@ func (mgr *manager) AddRoute(route *types.Route) (InsertedID interface{}) {
 func (mgr *manager) FindRouteBetweenPlaces(start_placeID string, end_placeID string) types.Route {
 
 	collection := mgr.client.Database("dev").Collection("routes")
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
 	var result types.Route
@@ -101,7 +101,7 @@ func (mgr *manager) FindRouteBetweenPlaces(start_placeID string, end_placeID str
 	if start_placeID <= end_placeID {
 		filter = bson.D{{"point1", start_placeID}, {"point2", end_placeID}}
 	} else {
-		filter = bson.D{{"point1", start_placeID}, {"point2", end_placeID}}
+		filter = bson.D{{"point2", start_placeID}, {"point1", end_placeID}}
 	}
 
 	err := collection.FindOne(ctx, filter).Decode(&result)
@@ -121,7 +121,7 @@ func (mgr *manager) FindRoutesByCity(city string) []types.Route {
 	}
 
 	collection := mgr.client.Database("dev").Collection("routes")
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
 	var results []types.Route
@@ -169,13 +169,18 @@ func (mgr *manager) buildDistanceCache() {
 }
 
 func (mgr *manager) FindCachedRouteBetweenPlaces(start_placeID string, end_placeID string) types.Route {
-	return mgr.DistanceCache[start_placeID][end_placeID]
+	if start_placeID <= end_placeID {
+		return mgr.DistanceCache[start_placeID][end_placeID]
+	} else {
+		return mgr.DistanceCache[end_placeID][start_placeID]
+	}
+
 }
 
 func (mgr *manager) FindPlaceByID(placeID string) types.Place {
 
 	collection := mgr.client.Database("dev").Collection("places")
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
 	var result types.Place
@@ -194,7 +199,7 @@ func (mgr *manager) FindPlaceByID(placeID string) types.Place {
 func (mgr *manager) FindPlacesByCity(city string) []types.Place {
 
 	collection := mgr.client.Database("dev").Collection("places")
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
 	var results []types.Place
@@ -220,7 +225,7 @@ func (mgr *manager) FindPlacesByCity(city string) []types.Place {
 func (mgr *manager) FindUniqueCities() []string {
 
 	collection := mgr.client.Database("dev").Collection("places")
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
 	cities, err := collection.Distinct(ctx, "city", bson.D{})
