@@ -152,12 +152,12 @@ func (mgr *manager) FindRoutesByCity(city string) []types.Route {
 
 func (mgr *manager) buildDistanceCache() {
 	distanceMap := make(map[string]map[string]types.Route)
-	uniqueCities := Mgr.FindUniqueCities()
+	// uniqueCities := Mgr.FindUniqueCities()
+	uniqueCites := []string{"madrid", "rome", "vienna", "hamburg", "warsaw"}
 
-	for _, city := range uniqueCities {
+	for _, city := range uniqueCites {
 
 		routes := Mgr.FindRoutesByCity(city)
-		fmt.Println("found ", len(routes), " routes for ", city)
 
 		for _, r := range routes {
 
@@ -165,13 +165,11 @@ func (mgr *manager) buildDistanceCache() {
 				if _, ok := distanceMap[r.Point1]; !ok {
 					distanceMap[r.Point1] = make(map[string]types.Route)
 				}
-				// fmt.Println("Adding route between ", r.Point1, " and ", r.Point2, "...", r)
 				distanceMap[r.Point1][r.Point2] = r
 			} else {
 				if _, ok := distanceMap[r.Point2]; !ok {
 					distanceMap[r.Point2] = make(map[string]types.Route)
 				}
-				// fmt.Println("Adding route between ", r.Point2, " and ", r.Point1, "...", r)
 				distanceMap[r.Point2][r.Point1] = r
 			}
 

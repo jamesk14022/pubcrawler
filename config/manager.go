@@ -35,6 +35,33 @@ func NewConfigManager() *ConfigManager {
 					"alpha":             1.3,
 				},
 			},
+			"budapest": {
+				2: {
+					"distanceThreshold": 1.5,
+					"mu":                1.5,
+					"alpha":             1.5,
+				},
+				3: {
+					"distanceThreshold": 1.5,
+					"mu":                1.5,
+					"alpha":             1.5,
+				},
+				4: {
+					"distanceThreshold": 1.5,
+					"mu":                1.5,
+					"alpha":             1.5,
+				},
+				5: {
+					"distanceThreshold": 2.0,
+					"mu":                1.7,
+					"alpha":             1.7,
+				},
+				6: {
+					"distanceThreshold": 2.0,
+					"mu":                1.7,
+					"alpha":             1.7,
+				},
+			},
 			"edinburgh": {
 				2: {
 					"distanceThreshold": 1.5,
@@ -50,6 +77,168 @@ func NewConfigManager() *ConfigManager {
 					"distanceThreshold": 1.5,
 					"mu":                1.5,
 					"alpha":             1.5,
+				},
+				5: {
+					"distanceThreshold": 2.0,
+					"mu":                1.7,
+					"alpha":             1.7,
+				},
+				6: {
+					"distanceThreshold": 2.0,
+					"mu":                1.7,
+					"alpha":             1.7,
+				},
+			},
+			"glasgow": {
+				2: {
+					"distanceThreshold": 1.5,
+					"mu":                1.5,
+					"alpha":             1.5,
+				},
+				3: {
+					"distanceThreshold": 1.5,
+					"mu":                1.5,
+					"alpha":             1.5,
+				},
+				4: {
+					"distanceThreshold": 1.5,
+					"mu":                1.5,
+					"alpha":             1.5,
+				},
+				5: {
+					"distanceThreshold": 2.0,
+					"mu":                1.7,
+					"alpha":             1.7,
+				},
+				6: {
+					"distanceThreshold": 2.0,
+					"mu":                1.7,
+					"alpha":             1.7,
+				},
+			},
+			"madrid": {
+				2: {
+					"distanceThreshold": 1.5,
+					"mu":                1.5,
+					"alpha":             1.5,
+				},
+				3: {
+					"distanceThreshold": 1.5,
+					"mu":                1.5,
+					"alpha":             1.5,
+				},
+				4: {
+					"distanceThreshold": 1.5,
+					"mu":                1.5,
+					"alpha":             1.5,
+				},
+				5: {
+					"distanceThreshold": 2.0,
+					"mu":                1.7,
+					"alpha":             1.7,
+				},
+				6: {
+					"distanceThreshold": 2.0,
+					"mu":                1.7,
+					"alpha":             1.7,
+				},
+			},
+			"rome": {
+				2: {
+					"distanceThreshold": 1.5,
+					"mu":                1.5,
+					"alpha":             1.5,
+				},
+				3: {
+					"distanceThreshold": 1.5,
+					"mu":                1.5,
+					"alpha":             1.5,
+				},
+				4: {
+					"distanceThreshold": 1.5,
+					"mu":                1.5,
+					"alpha":             1.5,
+				},
+				5: {
+					"distanceThreshold": 2.0,
+					"mu":                1.7,
+					"alpha":             1.7,
+				},
+				6: {
+					"distanceThreshold": 2.0,
+					"mu":                1.7,
+					"alpha":             1.7,
+				},
+			},
+			"vienna": {
+				2: {
+					"distanceThreshold": 1.5,
+					"mu":                1.5,
+					"alpha":             1.5,
+				},
+				3: {
+					"distanceThreshold": 1.7,
+					"mu":                1.7,
+					"alpha":             1.7,
+				},
+				4: {
+					"distanceThreshold": 2.0,
+					"mu":                1.7,
+					"alpha":             1.7,
+				},
+				5: {
+					"distanceThreshold": 2.0,
+					"mu":                1.7,
+					"alpha":             1.7,
+				},
+				6: {
+					"distanceThreshold": 2.0,
+					"mu":                1.7,
+					"alpha":             1.7,
+				},
+			},
+			"hamburg": {
+				2: {
+					"distanceThreshold": 1.5,
+					"mu":                1.5,
+					"alpha":             1.5,
+				},
+				3: {
+					"distanceThreshold": 1.7,
+					"mu":                1.7,
+					"alpha":             1.7,
+				},
+				4: {
+					"distanceThreshold": 2.0,
+					"mu":                1.7,
+					"alpha":             1.7,
+				},
+				5: {
+					"distanceThreshold": 2.0,
+					"mu":                1.7,
+					"alpha":             1.7,
+				},
+				6: {
+					"distanceThreshold": 2.0,
+					"mu":                1.7,
+					"alpha":             1.7,
+				},
+			},
+			"warsaw": {
+				2: {
+					"distanceThreshold": 1.5,
+					"mu":                1.5,
+					"alpha":             1.5,
+				},
+				3: {
+					"distanceThreshold": 1.7,
+					"mu":                1.7,
+					"alpha":             1.7,
+				},
+				4: {
+					"distanceThreshold": 2.0,
+					"mu":                1.7,
+					"alpha":             1.7,
 				},
 				5: {
 					"distanceThreshold": 2.0,
