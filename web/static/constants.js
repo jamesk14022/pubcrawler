@@ -12,6 +12,7 @@ const BASE_URL =
 
 const GOOGLE_MAP_BASE_URL = "https://www.google.com/maps/search";
 
+const maximumLocationCount = 5;
 const INITIAL_LOCATION = [-6.2603, 53.3498];
 
 const container = document.getElementById("container");
@@ -46,6 +47,8 @@ const sidebarToggle = document.getElementById("sidebarToggle");
 const secondaryBar = document.getElementById("secondaryBar");
 
 const selectStart = document.getElementById("pointStart");
+const locationCountError = document.getElementById("location-count-error");
+
 
 export {
   TIME_SPENT_BAR,
@@ -75,4 +78,6 @@ export {
   // closeBtn,
   selectStart,
   secondaryBar,
+  locationCountError,
+  maximumLocationCount
 };

@@ -19,6 +19,7 @@ import {
   sidebar,
   sidebarToggle,
   secondaryBar,
+  locationCountError
 } from "./constants.js";
 
 import { buildGoogleMapsUrl } from "./api.js";
@@ -227,6 +228,13 @@ export function setShareButtonCopied() {
   setTimeout(function () {
     shareButton.textContent = "Copy sharing link";
     shareButton.classList.remove("copied");
+  }, 2000);
+}
+
+export function setLocationCountError() {
+  locationCountError.classList.remove("hidden");
+  setTimeout(function () {
+    locationCountError.classList.add("hidden");
   }, 2000);
 }
 

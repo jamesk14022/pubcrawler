@@ -1,4 +1,4 @@
-import { TIME_SPENT_BAR } from "./constants.js";
+import { TIME_SPENT_BAR, maximumLocationCount } from "./constants.js";
 import { containsObject, copy, updateURL } from "./utils.js";
 import { getCityPoints, postCrawl, getCities, getPubs } from "./api.js";
 import {
@@ -26,6 +26,7 @@ import {
   setupPillClosedEvents,
   hidePill,
   showPill,
+  setLocationCountError,
 } from "./ui.js";
 import {
   flyToLocation,
@@ -59,7 +60,8 @@ setupPubPlusMinusEvents(
     setMarkersDisplay(selectedPubs);
   },
   () => {
-    if (selectedPubs === 8) {
+    if (selectedPubs + selectedAttractions === maximumLocationCount) {
+      setLocationCountError();
       return;
     }
     selectedPubs += 1;
@@ -76,7 +78,8 @@ setupAttractionPlusMinusEvents(
     setAttractionDisplay(selectedAttractions);
   },
   () => {
-    if (selectedAttractions === 4) {
+    if (selectedPubs + selectedAttractions === maximumLocationCount) {
+      setLocationCountError();
       return;
     }
     selectedAttractions += 1;
