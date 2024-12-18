@@ -165,7 +165,7 @@ export function clearBarInformationBox() {
 export function renderBarInformationBox(waypoint, index) {
 
   const barInfoDiv = document.createElement("div");
-  barInfoDiv.classList.add("min-w-[150px]", "max-w-[350px]", "inline", "snap-always", "snap-center");
+  barInfoDiv.classList.add("min-w-[150px]", "max-w-[350px]", "inline");
 
   
   const input = document.createElement("input");
@@ -177,7 +177,7 @@ export function renderBarInformationBox(waypoint, index) {
   };
   const label = document.createElement("label");
   label.htmlFor = `marker-${index}`;
-  label.classList.add("marker-label");
+  label.classList.add("marker-label", "min-h-[105px]");
   label.innerHTML = `<strong>Point ${String.fromCharCode(
     65 + index,
   )}</strong><br>${waypoint.name}`;
