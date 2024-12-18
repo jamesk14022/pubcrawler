@@ -141,17 +141,11 @@
 
         <div
           id="secondaryBar"
-          class="bg-slate-300 py-2 px-1 flex flex-col md:flex-row sm:text-xs"
+          class="bg-slate-300 py-2 px-1 flex flex-col justify-between md:flex-row sm:text-xs"
         >
-          <button
-            id="shareButton"
-            class="bg-slate-50 rounded-lg p-2 m-1 md:basis-1/5"
-            type="button"
-          >
-            <i class="material-icons">content_copy</i>Copy sharing link
-          </button>
 
-          <div class="flex flex-row p-1 m-1 items-center md:basis-1/3">
+
+          <div class="flex flex-row p-1 m-1 items-center md:basis-1/2">
             <label id="start-location-text" for="distance-slider"
               >No starting location set
             </label>
@@ -160,6 +154,14 @@
               <span class="pill-close" id="pill-close">✖</span>
             </div>
           </div>
+
+          <button
+            id="shareButton"
+            class="bg-slate-50 rounded-lg p-2 m-1 md:basis-1/5"
+            type="button"
+          >
+            <i class="material-icons">content_copy</i>Copy sharing link
+          </button>
         </div>
 
         <div id="map" class="relative flex flex-grow">
