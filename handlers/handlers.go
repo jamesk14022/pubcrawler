@@ -12,6 +12,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"sync"
 
 	// . "github.com/jamesk14022/barcrawler/cache"
 	config "github.com/jamesk14022/barcrawler/config"
@@ -133,26 +134,28 @@ func checkAttractionContraints(path []int, enrichedData []Place, targetAttractio
 }
 
 func getEligiblePaths(size int, targetPubs int, targetAttractions int, enrichedData []Place) ([][]string, []float64) {
-
 	var city = enrichedData[0].City
 	var eligiblePaths [][]int
 	var distances []float64
 	var totalTargetLength = targetPubs + targetAttractions
 
-	path := make([]int, totalTargetLength)
-	visited := make([]bool, size)
+	var mu sync.Mutex // To protect shared data
+	var wg sync.WaitGroup
+	semaphore := make(chan struct{}, 10) // Limit concurrency
 
-	var dfs func(node int, depth int, currentDist float64)
-	dfs = func(node int, depth int, currentDist float64) {
+	var dfs func(node int, depth int, currentDist float64, path []int, visited []bool)
+	dfs = func(node int, depth int, currentDist float64, path []int, visited []bool) {
 		if len(eligiblePaths) >= MaxReturnPaths {
 			return
 		}
 		if depth == totalTargetLength {
 			if currentDist < cm.GetConfig(city)[totalTargetLength]["distanceThreshold"] && checkAttractionContraints(path, enrichedData, targetAttractions) {
 				pathCopy := make([]int, totalTargetLength)
-				copy(pathCopy, path[:depth])
+				copy(pathCopy, path)
+				mu.Lock()
 				eligiblePaths = append(eligiblePaths, pathCopy)
 				distances = append(distances, currentDist)
+				mu.Unlock()
 			}
 			return
 		}
@@ -166,20 +169,30 @@ func getEligiblePaths(size int, targetPubs int, targetAttractions int, enrichedD
 				visited[i] = true
 				path[depth] = i
 				newDist := currentDist + dbprovider.Mgr.FindCachedRouteBetweenPlaces(enrichedData[node].PlaceID, enrichedData[i].PlaceID).Distance/1000
-				dfs(i, depth+1, newDist)
+				dfs(i, depth+1, newDist, path, visited)
 				visited[i] = false
 			}
 		}
 	}
 
+	// Start DFS in parallel for each starting node
 	for i := 0; i < size; i++ {
-		visited[i] = true
-		path[0] = i
-		dfs(i, 1, 0)
-		visited[i] = false
+		wg.Add(1)
+		semaphore <- struct{}{} // Acquire a semaphore
+		go func(startNode int) {
+			defer wg.Done()
+			defer func() { <-semaphore }() // Release the semaphore
+			path := make([]int, totalTargetLength)
+			visited := make([]bool, size)
+			visited[startNode] = true
+			path[0] = startNode
+			dfs(startNode, 1, 0, path, visited)
+		}(i)
 	}
 
-	// convert from indices to placeIDs
+	wg.Wait()
+
+	// Convert from indices to placeIDs
 	var eligiblePathsID [][]string
 	for _, path := range eligiblePaths {
 		var pathID []string
