@@ -288,9 +288,6 @@ html {
 #distance-slider {
   margin-right: 20px;
 }
-#route-duration-paragraph {
-  display: inline;
-}
 .mapboxgl-popup {
   max-width: 400px;
   font:
@@ -350,10 +347,9 @@ html {
   }
   #rightBar {
     position: absolute;
-    bottom: 10px;
-    left: 25px;
     z-index: 1;
-    width: 90%;
+    bottom: 0px;
+    width: 100%;
   }
   .listing-group {
     font:

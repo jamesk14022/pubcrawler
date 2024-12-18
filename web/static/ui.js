@@ -177,7 +177,7 @@ export function renderBarInformationBox(waypoint, index) {
   };
   const label = document.createElement("label");
   label.htmlFor = `marker-${index}`;
-  label.classList.add("marker-label");
+  label.classList.add("marker-label", "min-h-[105px]");
   label.innerHTML = `<strong>Point ${String.fromCharCode(
     65 + index,
   )}</strong><br>${waypoint.name}`;

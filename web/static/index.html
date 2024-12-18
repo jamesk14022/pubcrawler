@@ -43,7 +43,7 @@
   </head>
   <body>
     <div id="container" class="1xl:container">
-      <div class="min-h-screen flex flex-col">
+      <div class="min-h-[100dvh] flex flex-col">
         <div class="modal hidden" id="no-results">
           <div class="modal_content">
             <p id="no_pubs">
@@ -178,16 +178,14 @@
               </div>
               <div>
                 <p>
-                  Total route distance is <span id="route-length">10</span>km
-                </p>
-                <p id="route-duration-paragraph">
-                  Total route duration is
+                  Distance is <span id="route-length">10</span>km. 
+                  Duration is
                   <span id="route-duration">50</span> minutes
                 </p>
               </div>
             </div>
-            <div class="overflow-x-auto max-w-screen-lg">
-              <div id="listing-group" class="flex flex-nowrap listing-group snap-mandatory space-x-2"></div>
+            <div class="overflow-x-auto max-w-screen-lg bg-slate-300 p-2">
+              <div id="listing-group" class="flex flex-nowrap listing-group snap-mandatory space-x-1"></div>
             </div>
           </div>
         </div>
