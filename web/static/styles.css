@@ -160,8 +160,8 @@ html {
 @media screen and (min-width: 799px) {
   #rightBar {
     position: absolute;
-    top: 50px;
-    right: 25px;
+    top: 70px;
+    right: 15px;
     z-index: 1;
   }
 }

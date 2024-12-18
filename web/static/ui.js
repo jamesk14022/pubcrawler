@@ -165,7 +165,7 @@ export function clearBarInformationBox() {
 export function renderBarInformationBox(waypoint, index) {
 
   const barInfoDiv = document.createElement("div");
-  barInfoDiv.classList.add("min-w-[150px]", "max-w-[350px]", "inline");
+  barInfoDiv.classList.add("min-w-[160px]", "max-w-[350px]", "inline");
 
   
   const input = document.createElement("input");
@@ -177,7 +177,7 @@ export function renderBarInformationBox(waypoint, index) {
   };
   const label = document.createElement("label");
   label.htmlFor = `marker-${index}`;
-  label.classList.add("marker-label", "min-h-[105px]");
+  label.classList.add("marker-label", "min-h-[110px]", "max-h-[150px]", "md:min-h-[90px]");
   label.innerHTML = `<strong>Point ${String.fromCharCode(
     65 + index,
   )}</strong><br>${waypoint.name}`;
@@ -225,13 +225,13 @@ export function setShareButtonCopied() {
   shareButton.classList.add("copied");
 
   setTimeout(function () {
-    shareButton.textContent = "Share Link";
+    shareButton.textContent = "Copy sharing link";
     shareButton.classList.remove("copied");
   }, 2000);
 }
 
 export function setRouteLength(routeLength) {
-  document.getElementById("route-length").textContent = routeLength;
+  // document.getElementById("route-length").textContent = routeLength;
 }
 
 export function setRouteDuration(routeDuration) {

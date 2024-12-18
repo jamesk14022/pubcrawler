@@ -141,12 +141,19 @@
 
         <div
           id="secondaryBar"
-          class="bg-slate-300 py-2 px-1 flex flex-col justify-between md:flex-row sm:text-xs"
+          class="bg-slate-300 py-2 px-1 flex flex-col justify-between md:flex-row sm:text-xs md:text-lg"
         >
 
-
+        <button
+        id="shareButton"
+        class="bg-slate-50 rounded-lg p-2 m-1 mb-2 shadow-sm md:basis-1/5"
+        type="button"
+      >
+        <i class="material-icons">content_copy</i>Copy sharing link
+      </button>
+ 
           <div class="flex flex-row p-1 m-1 items-center md:basis-1/2">
-            <label id="start-location-text" for="distance-slider"
+            <label id="start-location-text" class="md:ml-auto" for="distance-slider"
               >No starting location set
             </label>
             <div id="start-pill" class="pill-button bg-sky-600 ml-2 hidden">
@@ -155,13 +162,7 @@
             </div>
           </div>
 
-          <button
-            id="shareButton"
-            class="bg-slate-50 rounded-lg p-2 m-1 md:basis-1/5"
-            type="button"
-          >
-            <i class="material-icons">content_copy</i>Copy sharing link
-          </button>
+
         </div>
 
         <div id="map" class="relative flex flex-grow">
@@ -178,13 +179,12 @@
               </div>
               <div>
                 <p>
-                  Distance is <span id="route-length">10</span>km. 
-                  Duration is
+                  Route duration is
                   <span id="route-duration">50</span> minutes
                 </p>
               </div>
             </div>
-            <div class="overflow-x-auto max-w-screen-lg bg-slate-300 p-2">
+            <div class="overflow-x-auto max-w-screen-lg bg-slate-200 rounded-md p-1">
               <div id="listing-group" class="flex flex-nowrap md:block md:max-w-[350px] listing-group sm:space-x-1 md:space-x-0"></div>
             </div>
           </div>
