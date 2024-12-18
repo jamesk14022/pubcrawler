@@ -92,7 +92,13 @@ setupFilterResetEvent(() => {
   setMarkersDisplay(selectedPubs);
 });
 
-export function selectStartEvent(place_id, place_name) {
+export function selectStartEvent(place_id, place_name, type) {
+  // ensure attraction filter if first location is an attraction
+  if (type === "attraction" && selectedAttractions === 0) {
+    selectedAttractions += 1;
+    setAttractionDisplay(selectedAttractions);
+  }
+  
   if (place_id === "") {
     hidePill();
   } else {

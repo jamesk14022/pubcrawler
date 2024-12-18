@@ -75,13 +75,15 @@ async function buildAlternativeAttractionMarkerPopupDescription(waypoint) {
     description += `<br>Price Level: ${"$".repeat(waypoint.price_level)}`;
   }
   if (waypoint.types.includes("tourist_attraction")) {
+    var type = "attraction";
     description = `🎡 ${description}`;
   } else {
+    var type = "pub";
     description = `🍺 ${description}`;
   }
 
   // description += `<br><img class="mt-1" src="${imageSrc}" alt="Photo of ${waypoint.name}" style="width: 100%; height: auto;">`;
-  description += `<br><button class="select-start-button m-2 p-2 mt-1 mx-auto rounded-md" data-id="${waypoint.place_id}" data-name="${waypoint.name}">Select as starting point</button>`;
+  description += `<br><button class="select-start-button m-2 p-2 mt-1 mx-auto rounded-md" data-id="${waypoint.place_id}" data-name="${waypoint.name}" data-type="${type}">Select as starting point</button>`;
   description = `<div class="shadow-md rounded-md p-1">${description}</div>`;
 
   return description;
@@ -145,7 +147,7 @@ export async function setupRenderAlternativeAttractionMarkersPopup() {
     const buttons = document.querySelectorAll(".select-start-button"); // Select all buttons with the class
     buttons.forEach((button) => {
       button.addEventListener("click", (event) => {
-        selectStartEvent(event.target.dataset.id, event.target.dataset.name);
+        selectStartEvent(event.target.dataset.id, event.target.dataset.name, event.target.dataset.type);
       });
     });
   });
