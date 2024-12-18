@@ -6,24 +6,29 @@ import (
 
 // Define the default config
 var DefaultConfig = types.MarkerSettings{
+	2: {
+		"distanceThreshold": 1.5,
+		"mu":                1.5,
+		"alpha":             1.5,
+	},
 	3: {
-		"distanceThreshold": 0.9,
-		"mu":                1.1,
-		"alpha":             1.1,
+		"distanceThreshold": 1.7,
+		"mu":                1.7,
+		"alpha":             1.7,
 	},
 	4: {
-		"distanceThreshold": 0.9,
-		"mu":                1.1,
-		"alpha":             1.1,
+		"distanceThreshold": 2.0,
+		"mu":                1.7,
+		"alpha":             1.7,
 	},
 	5: {
-		"distanceThreshold": 1.6,
-		"mu":                1.3,
-		"alpha":             1.3,
+		"distanceThreshold": 2.0,
+		"mu":                1.7,
+		"alpha":             1.7,
 	},
 	6: {
-		"distanceThreshold": 1.6,
-		"mu":                1.3,
-		"alpha":             1.3,
+		"distanceThreshold": 2.0,
+		"mu":                1.7,
+		"alpha":             1.7,
 	},
 }
