@@ -356,10 +356,6 @@ html {
     width: 90%;
   }
   .listing-group {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .listing-group {
     font:
       14px/20px "Helvetica Neue",
       Arial,

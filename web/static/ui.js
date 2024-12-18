@@ -163,6 +163,11 @@ export function clearBarInformationBox() {
 }
 
 export function renderBarInformationBox(waypoint, index) {
+
+  const barInfoDiv = document.createElement("div");
+  barInfoDiv.classList.add("min-w-[150px]", "max-w-[350px]", "inline", "snap-always", "snap-center");
+
+  
   const input = document.createElement("input");
   input.type = "button";
   input.id = `marker-${index}`;
@@ -205,8 +210,10 @@ export function renderBarInformationBox(waypoint, index) {
   label.innerHTML += "<br>";
   label.innerHTML += ratingDiv.innerHTML;
 
-  nav.appendChild(input);
-  nav.appendChild(label);
+  barInfoDiv.appendChild(input);
+  barInfoDiv.appendChild(label);
+
+  nav.appendChild(barInfoDiv);
 }
 
 export function setupShareButtonEvents(onShareButtonClicked) {
