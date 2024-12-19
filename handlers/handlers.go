@@ -141,7 +141,7 @@ func getEligiblePaths(size int, targetPubs int, targetAttractions int, enrichedD
 
 	var mu sync.Mutex // To protect shared data
 	var wg sync.WaitGroup
-	semaphore := make(chan struct{}, 10) // Limit concurrency
+	semaphore := make(chan struct{}, 5) // Limit concurrency
 
 	var dfs func(node int, depth int, currentDist float64, path []int, visited []bool)
 	dfs = func(node int, depth int, currentDist float64, path []int, visited []bool) {
