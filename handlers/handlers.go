@@ -22,7 +22,7 @@ import (
 	"github.com/jamesk14022/barcrawler/utils"
 )
 
-const MaxReturnPaths = 20000000
+const MaxReturnPaths = 500000
 
 var locationDataDir = os.Getenv("LOCATION_DATA_DIR")
 var emptyResponse = make([]Place, 0)
@@ -333,6 +333,7 @@ func generateRoute(enrichedData []Place, targetPubs int, targetAttractions int, 
 	city := enrichedData[0].City
 	size := len(enrichedData)
 	eligiblePaths, distances := getEligiblePaths(size, targetPubs, targetAttractions, enrichedData)
+	fmt.Println("Number of eligible paths: ", len(eligiblePaths))
 	if targetFirstLocation != "" {
 		eligiblePaths = filterPathsLocations(eligiblePaths, enrichedData, func(e []string, f []Place) bool {
 			return CheckFirstLocation(e, enrichedData, targetFirstLocation)

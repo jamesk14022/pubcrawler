@@ -43,6 +43,7 @@ import {
 let currentLocation = "dublin";
 let currentMarkers = [];
 let selectedFirstLocation = "";
+let selectedFirstLocationType = ""
 let selectedPubs = 3;
 let selectedAttractions = 1;
 let cityPoints = {};
@@ -71,6 +72,9 @@ setupPubPlusMinusEvents(
 
 setupAttractionPlusMinusEvents(
   () => {
+    if (selectedFirstLocationType === "attraction" && selectedAttractions === 1) {
+      return;  
+    }
     if (selectedAttractions === 0) {
       return;
     }
@@ -112,6 +116,7 @@ export function selectStartEvent(place_id, place_name, type) {
     showPill(place_name);
   }
   selectedFirstLocation = place_id;
+  selectedFirstLocationType = type;
 }
 
 const clearExistingRoute = () => {
@@ -241,7 +246,7 @@ function addCityLocations() {
 }
 
 setupPillClosedEvents(async () => {
-  selectStartEvent("", "");
+  selectStartEvent("", "", "");
   hidePill();
 });
 
