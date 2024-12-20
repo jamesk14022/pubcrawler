@@ -41,7 +41,6 @@ import {
 
 import './styles.css';
 
-// appplication state
 let currentLocation = "dublin";
 let currentMarkers = [];
 let selectedFirstLocation = "";
