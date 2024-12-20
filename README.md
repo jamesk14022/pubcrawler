@@ -16,6 +16,7 @@ Web app that uses graph theory to generate custom “city crawl” routes in EU 
 - WEB_DIR=/usr/local/web/static
 - LOCATION_DATA_DIR=/usr/local/data/location_data/
 - CACHE_DATA_PATH=/usr/local/data/location_data/cache.json
+- MONGO_URI=
 
 ## Run
 
