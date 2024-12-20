@@ -2,15 +2,20 @@ import { INITIAL_LOCATION, MAPBOX_TOKEN, TIME_SPENT_BAR } from "./constants.js";
 import { setRouteLength, setRouteDuration } from "./ui.js";
 import { convertToGeoJSON } from "./utils.js";
 import { selectStartEvent } from "./client.js";
+
 import mapboxgl from "mapbox-gl";
-import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
+import 'mapbox-gl/dist/mapbox-gl.css';
+import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
+import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css' // Updating node module will keep css up to date.
+
+
 
 // token scoped and safe for FE use
 mapboxgl.accessToken = MAPBOX_TOKEN;
 
 export const map = new mapboxgl.Map({
   container: "map",
-  style: "mapbox://styles/mapbox/streets-v11",
+  style: "mapbox://styles/mapbox/streets-v12",
   center: INITIAL_LOCATION,
   zoom: 12,
 });

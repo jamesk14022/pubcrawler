@@ -39,6 +39,8 @@ import {
   map,
 } from "./map.js";
 
+import './styles.css';
+
 // appplication state
 let currentLocation = "dublin";
 let currentMarkers = [];
