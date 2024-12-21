@@ -10,7 +10,6 @@ import {
   setupShareButtonEvents,
   setupRefreshButtonEvents,
   setupModalExitButtonEvents,
-  setupSearchBoxEvents,
   setRouteDuration,
   setMarkersDisplay,
   setAttractionDisplay,
@@ -18,7 +17,6 @@ import {
   hideLoading,
   showLoading,
   toggleNoPubsResults,
-  toggleNoCitiesResults,
   setupPubPlusMinusEvents,
   setupAttractionPlusMinusEvents,
   setupFilterResetEvent,
@@ -29,6 +27,7 @@ import {
   setLocationCountError,
   toggleSidebar,
   setupSidebarToggleEvents,
+  hideDropdownCities,
 } from "./ui.js";
 import {
   flyToLocation,
@@ -41,7 +40,7 @@ import {
   map,
 } from "./map.js";
 
-import 'flowbite';
+import "flowbite";
 import "./styles.css";
 
 let currentLocation = "dublin";
@@ -252,6 +251,29 @@ function addCityLocations() {
   updateRouteMetrics();
 }
 
+export async function setCity(e) {
+  hideDropdownCities();
+  let cityName = e.target.dataset.city;
+  hidePill();
+  flyToLocation(cityPoints[cityName]);
+  currentLocation = cityName;
+  clearExistingRoute();
+  showLoading();
+  let waypoints = await getPubs(
+    selectedPubs,
+    selectedAttractions,
+    currentLocation,
+    selectedFirstLocation,
+  );
+  await renderRoute(waypoints);
+  updateRouteMetrics();
+
+  // reset choice for first location and repopulate select
+  selectedFirstLocation = "";
+  addCityLocations();
+  hideLoading();
+}
+
 setupPillClosedEvents(async () => {
   selectStartEvent("", "", "");
   hidePill();
@@ -278,33 +300,5 @@ setupSidebarToggleEvents(async () => {
 setupModalExitButtonEvents(async () => {
   toggleNoPubsResults();
 });
-
-// setupSearchBoxEvents(async (e) => {
-//   let inputVal = e.target.value;
-//   if (inputVal in cityPoints) {
-//     hidePill();
-//     flyToLocation(cityPoints[inputVal]);
-//     currentLocation = inputVal;
-//     clearExistingRoute();
-//     showLoading();
-//     let waypoints = await getPubs(
-//       selectedPubs,
-//       selectedAttractions,
-//       currentLocation,
-//       selectedFirstLocation,
-//     );
-//     await renderRoute(waypoints);
-//     updateRouteMetrics();
-
-//     // reset choice for first location and repopulate select
-//     selectedFirstLocation = "";
-//     addCityLocations();
-//     hideLoading();
-//   } else {
-//     if (e.code === "Enter") {
-//       toggleNoCitiesResults();
-//     }
-//   }
-// });
 
 window.onload = pageStart;

@@ -24,7 +24,8 @@ const noPubsConent = document.getElementById("no_pubs");
 const cityNotFound = document.getElementById("city_not_found");
 const rightBar = document.getElementById("rightBar");
 const nav = document.getElementById("listing-group");
-const dataList = document.getElementById("locations");
+const dataList = document.getElementById("citiesDropdown");
+const dropdownCities = document.getElementById("dropdownCities");
 
 const pubMinus = document.querySelectorAll(".marker-quantity-btn-minus");
 const pubPlus = document.querySelectorAll(".marker-quantity-btn-plus");
@@ -79,4 +80,5 @@ export {
   secondaryBar,
   locationCountError,
   maximumLocationCount,
+  dropdownCities,
 };

@@ -19,8 +19,10 @@ import {
   sidebar,
   locationCountError,
   sidebarToggle,
+  dropdownCities,
 } from "./constants.js";
 
+import { setCity } from "./client.js";
 import { buildGoogleMapsUrl } from "./api.js";
 
 export const setAttractionDisplay = (attractions) => {
@@ -129,6 +131,7 @@ export function setupModalExitButtonEvents(onModalExitButtonClicked) {
 //   searchBox.addEventListener("keypress", onKeyPress);
 //   searchBox.addEventListener("input", onKeyPress);
 // }
+
 export function setupSidebarToggleEvents(onSidebarToggle) {
   if (sidebarToggle && !sidebarToggle.hasAttribute("listenerOnClick")) {
     sidebarToggle.addEventListener("click", function () {
@@ -144,7 +147,6 @@ export function clearCityList() {
 
 export function populateCityList(cities) {
   for (const city in cities) {
-
     const li = document.createElement("li");
     const a = document.createElement("a");
     a.href = "#";
@@ -160,10 +162,16 @@ export function populateCityList(cities) {
     );
 
     a.textContent = city;
+    a.dataset.city = city;
+    a.dataset.location = cities[city];
     li.appendChild(a);
-
+    li.addEventListener("click", (e) => setCity(e));
     dataList.appendChild(li);
   }
+}
+
+export function hideDropdownCities() {
+  dropdownCities.classList.add("hidden");
 }
 
 export function setFirstLocationText(text) {
