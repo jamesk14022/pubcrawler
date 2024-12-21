@@ -45,7 +45,7 @@
           <h1 class="text-white text-lg font-bold">BarCrawler</h1>
         </header>
 
-        <div class="bg-sky-600 h-15 flex flex-row py-2 px-1 justify-between">
+        <div class="bg-sky-600 h-15 flex items-center justify-between py-2 px-1">
           <button
             id="dropdownUsersButton"
             data-dropdown-toggle="dropdownUsers"
@@ -88,9 +88,10 @@
     </a> -->
           </div>
 
+          <div class="flex items-center">
           <button
             id="sidebarToggle"
-            class="toggle-btn shadow bg-white rounded-lg p-2 m-1 basis-2/12"
+            class="toggle-btn shadow bg-white rounded-lg p-2 m-1"
           >
             <i class="material-icons">menu</i>
             <span class="hidden lg:inline">Filter</span>
@@ -98,12 +99,13 @@
 
           <button
             type="button"
-            class="bg-slate-600 text-white rounded-lg p-2 m-1 basis-2/12"
+            class="bg-slate-600 text-white rounded-lg p-2 m-1"
             id="refresh-button"
           >
             <i class="material-icons">shuffle</i>
             <span class="hidden lg:inline">Generate Crawl</span>
           </button>
+          </div>
         </div>
 
         <div id="collap-sidebar" class="z-0 bg-slate-200 hidden">
