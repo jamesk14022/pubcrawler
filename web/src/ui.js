@@ -17,9 +17,8 @@ import {
   filterReset,
   markerCounter,
   sidebar,
-  sidebarToggle,
-  secondaryBar,
-  locationCountError
+  locationCountError,
+  sidebarToggle
 } from "./constants.js";
 
 import { buildGoogleMapsUrl } from "./api.js";
@@ -108,10 +107,9 @@ export function setupFilterResetEvent(onFilterReset) {
   });
 }
 
-const openSidebar = () => (
-  sidebar.classList.toggle("hidden")
-);
-sidebarToggle.addEventListener("click", openSidebar);
+export function toggleSidebar() {
+  sidebar.classList.toggle("hidden");
+}
 
 export function setupRefreshButtonEvents(onRefreshButtonClicked) {
   refreshButton.addEventListener("click", onRefreshButtonClicked);
@@ -130,6 +128,18 @@ export function setupModalExitButtonEvents(onModalExitButtonClicked) {
 export function setupSearchBoxEvents(onKeyPress) {
   searchBox.addEventListener("keypress", onKeyPress);
   searchBox.addEventListener("input", onKeyPress);
+}
+export function setupSidebarToggleEvents(onSidebarToggle){
+  if (sidebarToggle && !sidebarToggle.hasAttribute('listenerOnClick')) {
+    sidebarToggle.addEventListener('click', function () {
+          const elementClicked = this;
+          // fnDoAnything(this); // maybe call a function with the elementClicked...
+          console.log('sidebarToggle clicked'); 
+          onSidebarToggle();
+      });
+      console.log('event has been attached');
+  }
+  sidebarToggle.setAttribute('listenerOnClick', 'true');
 }
 
 export function clearCityList() {

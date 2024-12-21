@@ -1,4 +1,4 @@
-import { TIME_SPENT_BAR, maximumLocationCount } from "./constants.js";
+import { TIME_SPENT_BAR, sidebarToggle, maximumLocationCount } from "./constants.js";
 import { containsObject, copy, updateURL } from "./utils.js";
 import { getCityPoints, postCrawl, getCities, getPubs } from "./api.js";
 import {
@@ -27,6 +27,8 @@ import {
   hidePill,
   showPill,
   setLocationCountError,
+  toggleSidebar,
+  setupSidebarToggleEvents,
 } from "./ui.js";
 import {
   flyToLocation,
@@ -252,6 +254,7 @@ setupPillClosedEvents(async () => {
 });
 
 setupRefreshButtonEvents(async () => {
+  console.log("Refreshing route");
   clearExistingRoute();
   showLoading();
   let waypoints = await getPubs(
@@ -265,7 +268,11 @@ setupRefreshButtonEvents(async () => {
   hideLoading();
 });
 
-setupModalExitButtonEvents(() => {
+setupSidebarToggleEvents(async () => {
+  toggleSidebar();
+});
+
+setupModalExitButtonEvents(async () => {
   toggleNoPubsResults();
 });
 
@@ -296,5 +303,6 @@ setupSearchBoxEvents(async (e) => {
     }
   }
 });
+
 
 window.onload = pageStart;
