@@ -14,6 +14,7 @@ module.exports = {
       template: './src/index.html', // Specify the source HTML file
       filename: 'index.html', // Output file in the `dist` folder
       favicon: './src/assets/favicon.ico', // Add the favicon
+      inject: false
     }),
     new CopyWebpackPlugin({
       patterns: [

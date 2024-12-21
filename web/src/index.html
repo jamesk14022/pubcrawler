@@ -18,7 +18,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
-    <script src="bundle.js" defer></script>
+    <script defer src="bundle.js"></script>
   </head>
   <body>
     <div id="container" class="1xl:container">
@@ -94,7 +94,7 @@
             class="toggle-btn shadow bg-white rounded-lg p-2 m-1"
           >
             <i class="material-icons">menu</i>
-            <span class="hidden lg:inline">Filter</span>
+            <span class="inline">Filter</span>
           </button>
 
           <button
@@ -103,7 +103,7 @@
             id="refresh-button"
           >
             <i class="material-icons">shuffle</i>
-            <span class="hidden lg:inline">Generate Crawl</span>
+            <span class="inline">Generate Crawl</span>
           </button>
           </div>
         </div>
@@ -186,7 +186,7 @@
           </div>
         </div>
 
-        <div id="map" class="relative flex flex-grow">
+        <div id="map" class="relative flex flex-grow min-h-96">
           <datalist id="locations"></datalist>
 
           <div id="rightBar">

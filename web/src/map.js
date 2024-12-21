@@ -11,9 +11,14 @@ import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css"; // Updating
 // token scoped and safe for FE use
 mapboxgl.accessToken = MAPBOX_TOKEN;
 
+console.log(INITIAL_LOCATION);
+
 export const map = new mapboxgl.Map({
   container: "map",
-  style: "mapbox://styles/mapbox/streets-v12",
+  style: "mapbox://styles/mapbox/streets-v11",
+  fitBoundsOptions: {
+    padding: 50
+},
   center: INITIAL_LOCATION,
   zoom: 12,
 });
@@ -175,12 +180,20 @@ export function flyToLocation(location) {
 }
 
 export function renderMapRoute(waypoints) {
+
+  console.log(waypoints[0].geometry.location.lng,
+    waypoints[0].geometry.location.lat,);
+
   removeExistingRoute();
 
   directions.setOrigin([
     waypoints[0].geometry.location.lng,
     waypoints[0].geometry.location.lat,
   ]);
+
+
+  console.log(waypoints[waypoints.length - 1].geometry.location.lng,
+    waypoints[waypoints.length - 1].geometry.location.lat,)
 
   directions.setDestination([
     waypoints[waypoints.length - 1].geometry.location.lng,
@@ -189,6 +202,7 @@ export function renderMapRoute(waypoints) {
 
   // Add the middle waypoints
   waypoints.slice(1, -1).forEach((waypoint_mid, index) => {
+    console.log(waypoint_mid.geometry.location.lng, waypoint_mid.geometry.location.lat);
     directions.addWaypoint(index, [
       waypoint_mid.geometry.location.lng,
       waypoint_mid.geometry.location.lat,
@@ -197,6 +211,7 @@ export function renderMapRoute(waypoints) {
 }
 
 export function renderRouteMarker(waypoint, index) {
+  console.log(waypoint);
   // Create a custom marker element
   const el = document.createElement("div");
   el.className = "custom-marker";
