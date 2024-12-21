@@ -23,6 +23,10 @@ export const map = new mapboxgl.Map({
   zoom: 12,
 });
 
+map.on('idle',function(){
+  map.resize()
+  })
+  
 const directions = new MapboxDirections({
   accessToken: mapboxgl.accessToken,
   unit: "metric",
@@ -181,9 +185,6 @@ export function flyToLocation(location) {
 
 export function renderMapRoute(waypoints) {
 
-  console.log(waypoints[0].geometry.location.lng,
-    waypoints[0].geometry.location.lat,);
-
   removeExistingRoute();
 
   directions.setOrigin([
@@ -192,9 +193,6 @@ export function renderMapRoute(waypoints) {
   ]);
 
 
-  console.log(waypoints[waypoints.length - 1].geometry.location.lng,
-    waypoints[waypoints.length - 1].geometry.location.lat,)
-
   directions.setDestination([
     waypoints[waypoints.length - 1].geometry.location.lng,
     waypoints[waypoints.length - 1].geometry.location.lat,
@@ -202,7 +200,6 @@ export function renderMapRoute(waypoints) {
 
   // Add the middle waypoints
   waypoints.slice(1, -1).forEach((waypoint_mid, index) => {
-    console.log(waypoint_mid.geometry.location.lng, waypoint_mid.geometry.location.lat);
     directions.addWaypoint(index, [
       waypoint_mid.geometry.location.lng,
       waypoint_mid.geometry.location.lat,
