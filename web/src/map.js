@@ -4,11 +4,9 @@ import { convertToGeoJSON } from "./utils.js";
 import { selectStartEvent } from "./client.js";
 
 import mapboxgl from "mapbox-gl";
-import 'mapbox-gl/dist/mapbox-gl.css';
-import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
-import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css' // Updating node module will keep css up to date.
-
-
+import "mapbox-gl/dist/mapbox-gl.css";
+import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
+import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css"; // Updating node module will keep css up to date.
 
 // token scoped and safe for FE use
 mapboxgl.accessToken = MAPBOX_TOKEN;
@@ -154,7 +152,11 @@ export async function setupRenderAlternativeAttractionMarkersPopup() {
     const buttons = document.querySelectorAll(".select-start-button"); // Select all buttons with the class
     buttons.forEach((button) => {
       button.addEventListener("click", (event) => {
-        selectStartEvent(event.target.dataset.id, event.target.dataset.name, event.target.dataset.type);
+        selectStartEvent(
+          event.target.dataset.id,
+          event.target.dataset.name,
+          event.target.dataset.type,
+        );
       });
     });
   });

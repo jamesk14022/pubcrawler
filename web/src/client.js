@@ -1,4 +1,4 @@
-import { TIME_SPENT_BAR, sidebarToggle, maximumLocationCount } from "./constants.js";
+import { TIME_SPENT_BAR, maximumLocationCount } from "./constants.js";
 import { containsObject, copy, updateURL } from "./utils.js";
 import { getCityPoints, postCrawl, getCities, getPubs } from "./api.js";
 import {
@@ -41,12 +41,12 @@ import {
   map,
 } from "./map.js";
 
-import './styles.css';
+import "./styles.css";
 
 let currentLocation = "dublin";
 let currentMarkers = [];
 let selectedFirstLocation = "";
-let selectedFirstLocationType = ""
+let selectedFirstLocationType = "";
 let selectedPubs = 3;
 let selectedAttractions = 1;
 let cityPoints = {};
@@ -75,8 +75,11 @@ setupPubPlusMinusEvents(
 
 setupAttractionPlusMinusEvents(
   () => {
-    if (selectedFirstLocationType === "attraction" && selectedAttractions === 1) {
-      return;  
+    if (
+      selectedFirstLocationType === "attraction" &&
+      selectedAttractions === 1
+    ) {
+      return;
     }
     if (selectedAttractions === 0) {
       return;
@@ -105,14 +108,14 @@ setupFilterResetEvent(() => {
 export function selectStartEvent(place_id, place_name, type) {
   // ensure attraction filter if first location is an attraction
   if (type === "attraction" && selectedAttractions === 0) {
-    if(selectedPubs + selectedAttractions === maximumLocationCount) {
-      selectedPubs -= 1;   
+    if (selectedPubs + selectedAttractions === maximumLocationCount) {
+      selectedPubs -= 1;
       setMarkersDisplay(selectedPubs);
     }
     selectedAttractions += 1;
     setAttractionDisplay(selectedAttractions);
-   }
-  
+  }
+
   if (place_id === "") {
     hidePill();
   } else {
@@ -254,7 +257,6 @@ setupPillClosedEvents(async () => {
 });
 
 setupRefreshButtonEvents(async () => {
-  console.log("Refreshing route");
   clearExistingRoute();
   showLoading();
   let waypoints = await getPubs(
@@ -303,6 +305,5 @@ setupSearchBoxEvents(async (e) => {
     }
   }
 });
-
 
 window.onload = pageStart;

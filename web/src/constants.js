@@ -49,7 +49,6 @@ const secondaryBar = document.getElementById("secondaryBar");
 const selectStart = document.getElementById("pointStart");
 const locationCountError = document.getElementById("location-count-error");
 
-
 export {
   TIME_SPENT_BAR,
   MAPBOX_TOKEN,
@@ -79,5 +78,5 @@ export {
   selectStart,
   secondaryBar,
   locationCountError,
-  maximumLocationCount
+  maximumLocationCount,
 };

@@ -18,7 +18,7 @@ import {
   markerCounter,
   sidebar,
   locationCountError,
-  sidebarToggle
+  sidebarToggle,
 } from "./constants.js";
 
 import { buildGoogleMapsUrl } from "./api.js";
@@ -129,17 +129,13 @@ export function setupSearchBoxEvents(onKeyPress) {
   searchBox.addEventListener("keypress", onKeyPress);
   searchBox.addEventListener("input", onKeyPress);
 }
-export function setupSidebarToggleEvents(onSidebarToggle){
-  if (sidebarToggle && !sidebarToggle.hasAttribute('listenerOnClick')) {
-    sidebarToggle.addEventListener('click', function () {
-          const elementClicked = this;
-          // fnDoAnything(this); // maybe call a function with the elementClicked...
-          console.log('sidebarToggle clicked'); 
-          onSidebarToggle();
-      });
-      console.log('event has been attached');
+export function setupSidebarToggleEvents(onSidebarToggle) {
+  if (sidebarToggle && !sidebarToggle.hasAttribute("listenerOnClick")) {
+    sidebarToggle.addEventListener("click", function () {
+      onSidebarToggle();
+    });
   }
-  sidebarToggle.setAttribute('listenerOnClick', 'true');
+  sidebarToggle.setAttribute("listenerOnClick", "true");
 }
 
 export function clearCityList() {
@@ -174,11 +170,9 @@ export function clearBarInformationBox() {
 }
 
 export function renderBarInformationBox(waypoint, index) {
-
   const barInfoDiv = document.createElement("div");
   barInfoDiv.classList.add("min-w-[160px]", "max-w-[350px]", "inline");
 
-  
   const input = document.createElement("input");
   input.type = "button";
   input.id = `marker-${index}`;
@@ -188,7 +182,12 @@ export function renderBarInformationBox(waypoint, index) {
   };
   const label = document.createElement("label");
   label.htmlFor = `marker-${index}`;
-  label.classList.add("marker-label", "min-h-[110px]", "max-h-[150px]", "md:min-h-[90px]");
+  label.classList.add(
+    "marker-label",
+    "min-h-[110px]",
+    "max-h-[150px]",
+    "md:min-h-[90px]",
+  );
   label.innerHTML = `<strong>Point ${String.fromCharCode(
     65 + index,
   )}</strong><br>${waypoint.name}`;
