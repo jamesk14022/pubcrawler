@@ -2,7 +2,6 @@ import {
   container,
   refreshButton,
   shareButton,
-  searchBox,
   modalExitButton,
   noPubsConent,
   cityNotFound,
@@ -126,11 +125,6 @@ export function setupPillClosedEvents(onPillClosed) {
 export function setupModalExitButtonEvents(onModalExitButtonClicked) {
   modalExitButton.addEventListener("click", onModalExitButtonClicked);
 }
-
-// export function setupSearchBoxEvents(onKeyPress) {
-//   searchBox.addEventListener("keypress", onKeyPress);
-//   searchBox.addEventListener("input", onKeyPress);
-// }
 
 export function setupSidebarToggleEvents(onSidebarToggle) {
   if (sidebarToggle && !sidebarToggle.hasAttribute("listenerOnClick")) {

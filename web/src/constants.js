@@ -44,7 +44,6 @@ const markerCounter = document.querySelectorAll(".num-markers");
 
 const sidebar = document.getElementById("collap-sidebar");
 const sidebarToggle = document.getElementById("sidebarToggle");
-// const closeBtn = sidebar.querySelector(".close-btn");
 const secondaryBar = document.getElementById("secondaryBar");
 
 const selectStart = document.getElementById("pointStart");
