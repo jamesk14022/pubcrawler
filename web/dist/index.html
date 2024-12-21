@@ -41,22 +41,16 @@
           </div>
         </div>
         <header class="bg-slate-600 h-12 flex items-center">
-          <img
-            src="favicon.ico"
-            alt="BarCrawler logo"
-            class="h-8 w-8 m-2"
-          />
+          <img src="favicon.ico" alt="BarCrawler logo" class="h-8 w-8 m-2" />
           <h1 class="text-white text-lg font-bold">BarCrawler</h1>
         </header>
 
-        <div class="bg-sky-600 h-15 flex flex-row py-2 px-1">
-          <input
-            type="text"
-            id="search-box"
-            list="locations"
-            placeholder="Search city..."
-            class="basis-8/12 p-2 m-1"
-          />
+        <div class="bg-sky-600 h-15 flex flex-row py-2 px-1 justify-between">
+
+
+  
+  
+  
 
           <button
             id="sidebarToggle"
@@ -79,7 +73,9 @@
         <div id="collap-sidebar" class="z-0 bg-slate-200 hidden">
           <div class="flex flex-col md:flex-row pl-10 py-8 gap-10">
             <div>
-              <label class="min-w-28 md:min-w-0" for="distance-slider">Pubs:</label>
+              <label class="min-w-28 md:min-w-0" for="distance-slider"
+                >Pubs:</label
+              >
               <button
                 class="btn-side rounded-full border-4 border-slate-300 marker-quantity-btn-minus btn-circle"
               >
@@ -94,7 +90,9 @@
             </div>
 
             <div>
-              <label class="min-w-28 md:min-w-4" for="distance-slider">Attractions:</label>
+              <label class="min-w-28 md:min-w-4" for="distance-slider"
+                >Attractions:</label
+              >
               <button
                 class="btn-side rounded-full border-4 border-slate-300 attraction-quantity-btn-minus btn-circle"
               >
@@ -109,7 +107,9 @@
             </div>
 
             <div class="flex items-center justify-center">
-              <span id="location-count-error" class="text-red-600 hidden">You may select a maximum of 5 locations.</span>
+              <span id="location-count-error" class="text-red-600 hidden"
+                >You may select a maximum of 5 locations.</span
+              >
             </div>
           </div>
 
@@ -126,17 +126,19 @@
           id="secondaryBar"
           class="bg-slate-300 py-2 px-1 flex flex-col justify-between md:flex-row sm:text-xs md:text-base"
         >
+          <button
+            id="shareButton"
+            class="bg-slate-50 rounded-lg p-2 m-1 mb-2 shadow-sm md:basis-1/5"
+            type="button"
+          >
+            <i class="material-icons">content_copy</i>Copy sharing link
+          </button>
 
-        <button
-        id="shareButton"
-        class="bg-slate-50 rounded-lg p-2 m-1 mb-2 shadow-sm md:basis-1/5"
-        type="button"
-      >
-        <i class="material-icons">content_copy</i>Copy sharing link
-      </button>
- 
           <div class="flex flex-row p-1 m-1 items-center md:basis-1/2">
-            <label id="start-location-text" class="md:ml-auto" for="distance-slider"
+            <label
+              id="start-location-text"
+              class="md:ml-auto"
+              for="distance-slider"
               >No starting location set
             </label>
             <div id="start-pill" class="pill-button bg-sky-600 ml-2 hidden">
@@ -144,8 +146,6 @@
               <span class="pill-close" id="pill-close">✖</span>
             </div>
           </div>
-
-
         </div>
 
         <div id="map" class="relative flex flex-grow">
@@ -167,8 +167,13 @@
                 </p>
               </div>
             </div>
-            <div class="overflow-x-auto max-w-screen-lg bg-slate-200 rounded-md p-1">
-              <div id="listing-group" class="flex flex-nowrap md:block md:max-w-[350px] listing-group sm:space-x-1 md:space-x-0"></div>
+            <div
+              class="overflow-x-auto max-w-screen-lg bg-slate-200 rounded-md p-1"
+            >
+              <div
+                id="listing-group"
+                class="flex flex-nowrap md:block md:max-w-[350px] listing-group sm:space-x-1 md:space-x-0"
+              ></div>
             </div>
           </div>
         </div>

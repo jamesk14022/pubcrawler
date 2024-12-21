@@ -125,10 +125,10 @@ export function setupModalExitButtonEvents(onModalExitButtonClicked) {
   modalExitButton.addEventListener("click", onModalExitButtonClicked);
 }
 
-export function setupSearchBoxEvents(onKeyPress) {
-  searchBox.addEventListener("keypress", onKeyPress);
-  searchBox.addEventListener("input", onKeyPress);
-}
+// export function setupSearchBoxEvents(onKeyPress) {
+//   searchBox.addEventListener("keypress", onKeyPress);
+//   searchBox.addEventListener("input", onKeyPress);
+// }
 export function setupSidebarToggleEvents(onSidebarToggle) {
   if (sidebarToggle && !sidebarToggle.hasAttribute("listenerOnClick")) {
     sidebarToggle.addEventListener("click", function () {
@@ -144,9 +144,25 @@ export function clearCityList() {
 
 export function populateCityList(cities) {
   for (const city in cities) {
-    const option = document.createElement("option");
-    option.value = city;
-    dataList.appendChild(option);
+
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = "#";
+    a.classList.add(
+      "flex",
+      "items-center",
+      "px-4",
+      "py-2",
+      "bg-white",
+      "hover:bg-gray-100",
+      "dark:hover:bg-gray-600",
+      "dark:hover:text-white",
+    );
+
+    a.textContent = city;
+    li.appendChild(a);
+
+    dataList.appendChild(li);
   }
 }
 
