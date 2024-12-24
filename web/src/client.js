@@ -5,7 +5,6 @@ import {
   clearBarInformationBox,
   clearCityList,
   populateCityList,
-  setRouteLength,
   setShareButtonCopied,
   setupShareButtonEvents,
   setupRefreshButtonEvents,
@@ -106,7 +105,6 @@ setupFilterResetEvent(() => {
 });
 
 export function selectStartEvent(place_id, place_name, type) {
-  // ensure attraction filter if first location is an attraction
   if (type === "attraction" && selectedAttractions === 0) {
     if (selectedPubs + selectedAttractions === maximumLocationCount) {
       selectedPubs -= 1;
@@ -144,7 +142,6 @@ function copyShareLink() {
 
 function updateRouteMetrics(e) {
   if (e !== undefined) {
-    setRouteLength((e[0].distance / 1000).toFixed(2));
     setRouteDuration(
       parseInt(e[0].duration / 60 + selectedPubs * TIME_SPENT_BAR),
     );
@@ -253,10 +250,12 @@ function addCityLocations() {
 
 export async function setCity(e) {
   hideDropdownCities();
-  let cityName = e.target.dataset.city;
   hidePill();
-  flyToLocation(cityPoints[cityName]);
+  
+  let cityName = e.target.dataset.city;
   currentLocation = cityName;
+
+  flyToLocation(cityPoints[cityName]);
   clearExistingRoute();
   showLoading();
   let waypoints = await getPubs(

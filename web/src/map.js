@@ -1,32 +1,25 @@
 import { INITIAL_LOCATION, MAPBOX_TOKEN, TIME_SPENT_BAR } from "./constants.js";
-import { setRouteLength, setRouteDuration } from "./ui.js";
+import { setRouteDuration } from "./ui.js";
 import { convertToGeoJSON } from "./utils.js";
 import { selectStartEvent } from "./client.js";
 
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
-import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css"; // Updating node module will keep css up to date.
+import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css"; 
 
 // token scoped and safe for FE use
 mapboxgl.accessToken = MAPBOX_TOKEN;
 
-console.log(INITIAL_LOCATION);
-
 export const map = new mapboxgl.Map({
   container: "map",
   style: "mapbox://styles/mapbox/streets-v11",
-  fitBoundsOptions: {
-    padding: 50
-},
   center: INITIAL_LOCATION,
   zoom: 12,
 });
 
-map.on('idle',function(){
-  map.resize()
-  })
-  
+map.once('idle', function () { map.resize() })
+
 const directions = new MapboxDirections({
   accessToken: mapboxgl.accessToken,
   unit: "metric",
@@ -35,7 +28,6 @@ const directions = new MapboxDirections({
 });
 
 directions.on("route", (e) => {
-  setRouteLength((e["route"][0].distance / 1000).toFixed(2));
   setRouteDuration(
     parseInt(
       e["route"][0].duration / 60 +
@@ -208,8 +200,6 @@ export function renderMapRoute(waypoints) {
 }
 
 export function renderRouteMarker(waypoint, index) {
-  console.log(waypoint);
-  // Create a custom marker element
   const el = document.createElement("div");
   el.className = "custom-marker";
   el.textContent = String.fromCharCode(65 + index); // Labels A, B, C, etc.

@@ -37,9 +37,9 @@ export const setMarkersDisplay = (markers) => {
 };
 
 export function showLoading() {
-  // document.querySelector(".loading-spinner").style.display = "block";
-  // document.querySelector(".loading-overlay").style.display = "block";
-  // container.classList.add("blurred");
+  document.querySelector(".loading-spinner").style.display = "block";
+  document.querySelector(".loading-overlay").style.display = "block";
+  container.classList.add("blurred");
 }
 
 const hideRightBar = () => (rightBar.style.display = "none");
@@ -189,7 +189,7 @@ export function clearBarInformationBox() {
 
 export function renderBarInformationBox(waypoint, index) {
   const barInfoDiv = document.createElement("div");
-  barInfoDiv.classList.add("min-w-[160px]", "max-w-[350px]", "inline");
+  barInfoDiv.classList.add("min-w-[200px]", "sm:min-w-[160px]", "max-w-[350px]", "inline");
 
   const input = document.createElement("input");
   input.type = "button";
@@ -201,6 +201,8 @@ export function renderBarInformationBox(waypoint, index) {
   const label = document.createElement("label");
   label.htmlFor = `marker-${index}`;
   label.classList.add(
+    "min-w-[200px]",
+    "sm:min-w-[160px]",
     "marker-label",
     "min-h-[110px]",
     "max-h-[150px]",
@@ -235,9 +237,7 @@ export function renderBarInformationBox(waypoint, index) {
     ratingDiv.appendChild(dollarSpan);
   }
 
-  label.innerHTML += "<br>";
-  label.innerHTML += ratingDiv.innerHTML;
-
+  label.innerHTML += `<br>${ratingDiv.innerHTML}`;
   barInfoDiv.appendChild(input);
   barInfoDiv.appendChild(label);
 
@@ -263,10 +263,6 @@ export function setLocationCountError() {
   setTimeout(function () {
     locationCountError.classList.add("hidden");
   }, 2000);
-}
-
-export function setRouteLength(routeLength) {
-  // document.getElementById("route-length").textContent = routeLength;
 }
 
 export function setRouteDuration(routeDuration) {
