@@ -20,8 +20,7 @@ const refreshButton = document.getElementById("refresh-button");
 const shareButton = document.getElementById("shareButton");
 const searchBox = document.getElementById("search-box");
 const modalExitButton = document.getElementById("modal-exit");
-const noPubsConent = document.getElementById("no_pubs");
-const cityNotFound = document.getElementById("city_not_found");
+const noPubsConent = document.getElementById("no-results");
 const rightBar = document.getElementById("rightBar");
 const nav = document.getElementById("listing-group");
 const dataList = document.getElementById("citiesDropdown");
@@ -61,7 +60,6 @@ export {
   searchBox,
   modalExitButton,
   noPubsConent,
-  cityNotFound,
   rightBar,
   nav,
   dataList,

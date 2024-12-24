@@ -20,26 +20,23 @@
     />
     <script defer src="bundle.js"></script>
   </head>
-  <body>
-    <div id="container" class="1xl:container">
-      <div class="min-h-[100dvh] flex flex-col">
-        <div class="modal hidden" id="no-results">
-          <div class="modal_content">
+  <body><div id="container" class="1xl:container"></div>
+         <div class="modal hidden" id="no-results">
+          <div class="modal_content mx-auto mt-60 w-64 h-56 relative text-center shadow-lg border-2	border-gray-600 rounded-md p-10 z-50 bg-slate-300">
             <p id="no_pubs">
               No routes found within the specified distance. Please try
               adjusting the distance or number of pubs.
             </p>
-            <p id="city_not_found">City not found. Please try again.</p>
-            <div id="exit">
               <button
                 id="modal-exit"
                 class="shadow bg-white rounded-lg p-2 mt-2"
               >
                 Close
               </button>
-            </div>
           </div>
-        </div>
+        </div>   
+      <div class="min-h-[100dvh] flex flex-col">
+
         <header class="bg-slate-600 h-12 flex items-center">
           <img src="favicon.ico" alt="BarCrawler logo" class="h-8 w-8 m-2" />
           <h1 class="text-white text-lg font-bold">BarCrawler</h1>

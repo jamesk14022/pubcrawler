@@ -4,7 +4,6 @@ import {
   shareButton,
   modalExitButton,
   noPubsConent,
-  cityNotFound,
   rightBar,
   nav,
   dataList,
@@ -54,10 +53,6 @@ export function hideLoading() {
 export function toggleNoPubsResults() {
   const modal = document.querySelector(".modal");
   modal.classList.toggle("hidden");
-
-  noPubsConent.style.display = "block";
-  cityNotFound.style.display = "none";
-
   hideRightBar();
 }
 
@@ -66,7 +61,6 @@ export function toggleNoCitiesResults() {
   modal.classList.toggle("hidden");
 
   noPubsConent.style.display = "none";
-  cityNotFound.style.display = "block";
 }
 
 export function setupPubPlusMinusEvents(onPubMinus, onPubPlus) {
