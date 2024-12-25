@@ -11,55 +11,51 @@ function containsObject(obj, list) {
 
 function copy(text) {
   return new Promise((resolve, reject) => {
-    if (
-      typeof navigator !== "undefined" &&
-      typeof navigator.clipboard !== "undefined" &&
-      navigator.permissions !== "undefined"
-    ) {
-      const type = "text/plain";
-      const blob = new Blob([text], { type });
-      const data = [new ClipboardItem({ [type]: blob })];
-      navigator.permissions
-        .query({ name: "clipboard-write" })
-        .then((permission) => {
-          if (permission.state === "granted" || permission.state === "prompt") {
-            navigator.clipboard.write(data).then(resolve, reject).catch(reject);
-          } else {
-            reject(new Error("Permission not granted!"));
-          }
+    // 1) Modern Clipboard API approach
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard.writeText(text)
+        .then(resolve)
+        .catch((err) => {
+          console.error("Clipboard API failed, falling back to execCommand.", err);
+          fallbackCopyToClipboard(text, resolve, reject);
         });
-    } else if (
-      document.queryCommandSupported &&
-      document.queryCommandSupported("copy")
-    ) {
-      var textarea = document.createElement("textarea");
-      textarea.textContent = text;
-      textarea.style.position = "fixed";
-      textarea.style.width = "2em";
-      textarea.style.height = "2em";
-      textarea.style.padding = 0;
-      textarea.style.border = "none";
-      textarea.style.outline = "none";
-      textarea.style.boxShadow = "none";
-      textarea.style.background = "transparent";
-      document.body.appendChild(textarea);
-      textarea.focus();
-      textarea.select();
-      try {
-        document.execCommand("copy");
-        document.body.removeChild(textarea);
-        resolve();
-      } catch (e) {
-        document.body.removeChild(textarea);
-        reject(e);
-      }
     } else {
-      reject(
-        new Error("None of copying methods are supported by this browser!"),
-      );
+      // 2) Fallback for older browsers, iOS Safari, some Android browsers, etc.
+      fallbackCopyToClipboard(text, resolve, reject);
     }
   });
 }
+
+function fallbackCopyToClipboard(text, resolve, reject) {
+  // Create a temporary <textarea> to select and copy from
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+
+  // Make it off-screen (and fixed) so iOS doesn’t scroll to it
+  textArea.style.position = "fixed";
+  textArea.style.top = "-9999px";
+  textArea.style.left = "-9999px";
+
+  document.body.appendChild(textArea);
+
+  textArea.focus();
+  textArea.select();
+
+  try {
+    const successful = document.execCommand("copy");
+    document.body.removeChild(textArea);
+    
+    if (successful) {
+      resolve();
+    } else {
+      reject(new Error("Fallback: Copy command was unsuccessful"));
+    }
+  } catch (err) {
+    document.body.removeChild(textArea);
+    reject(err);
+  }
+}
+
 
 function updateURL(location, targetPubs, targetAttractions, ...markers) {
   var state = {
