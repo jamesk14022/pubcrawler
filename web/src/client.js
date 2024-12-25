@@ -254,6 +254,7 @@ export async function setCity(e) {
   
   let cityName = e.target.dataset.city;
   currentLocation = cityName;
+  selectedFirstLocation = "";
 
   flyToLocation(cityPoints[cityName]);
   clearExistingRoute();
@@ -267,8 +268,6 @@ export async function setCity(e) {
   await renderRoute(waypoints);
   updateRouteMetrics();
 
-  // reset choice for first location and repopulate select
-  selectedFirstLocation = "";
   addCityLocations();
   hideLoading();
 }
