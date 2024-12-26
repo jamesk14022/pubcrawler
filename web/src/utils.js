@@ -13,10 +13,14 @@ function copy(text) {
   return new Promise((resolve, reject) => {
     // 1) Modern Clipboard API approach
     if (navigator?.clipboard?.writeText) {
-      navigator.clipboard.writeText(text)
+      navigator.clipboard
+        .writeText(text)
         .then(resolve)
         .catch((err) => {
-          console.error("Clipboard API failed, falling back to execCommand.", err);
+          console.error(
+            "Clipboard API failed, falling back to execCommand.",
+            err,
+          );
           fallbackCopyToClipboard(text, resolve, reject);
         });
     } else {
@@ -44,7 +48,7 @@ function fallbackCopyToClipboard(text, resolve, reject) {
   try {
     const successful = document.execCommand("copy");
     document.body.removeChild(textArea);
-    
+
     if (successful) {
       resolve();
     } else {
@@ -55,7 +59,6 @@ function fallbackCopyToClipboard(text, resolve, reject) {
     reject(err);
   }
 }
-
 
 function updateURL(location, targetPubs, targetAttractions, ...markers) {
   var state = {

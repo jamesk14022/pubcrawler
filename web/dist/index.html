@@ -20,29 +20,33 @@
     />
     <script defer src="bundle.js"></script>
   </head>
-  <body><div id="container" class="1xl:container">
-         <div class="modal hidden absolute top-0 left-0 h-full w-full justify-center" id="no-results">
-          <div class="modal_content mx-auto mt-72 w-64 h-64 relative text-center shadow-lg border-2	border-white rounded-lg p-10 z-50 bg-slate-300">
-            <p id="no_pubs">
-              No routes found within the specified distance. Please try
-              adjusting the distance or number of pubs.
-            </p>
-              <button
-                id="modal-exit"
-                class="shadow bg-white rounded-lg p-2 mt-6"
-              >
-                Close
-              </button>
-          </div>
-        </div>   
+  <body>
+    <div id="container" class="1xl:container">
+      <div
+        class="modal hidden absolute top-0 left-0 h-full w-full justify-center"
+        id="no-results"
+      >
+        <div
+          class="modal_content mx-auto mt-72 w-64 h-64 relative text-center shadow-lg border-2 border-white rounded-lg p-10 z-50 bg-slate-300"
+        >
+          <p id="no_pubs">
+            No routes found within the specified distance. Please try adjusting
+            the distance or number of pubs.
+          </p>
+          <button id="modal-exit" class="shadow bg-white rounded-lg p-2 mt-6">
+            Close
+          </button>
+        </div>
+      </div>
       <div class="min-h-[100dvh] flex flex-col">
-
         <header class="bg-slate-600 h-12 flex items-center">
           <img src="favicon.ico" alt="BarCrawler logo" class="h-8 w-8 m-2" />
           <h1 class="text-white text-lg font-bold">BarCrawler</h1>
         </header>
 
-        <div class="bg-sky-600 h-15 flex items-center justify-between py-2 px-1 text-xs sm:text-base">
+        <div
+          class="bg-sky-600 h-15 flex items-center justify-between py-2 px-1 text-xs sm:text-base"
+        >
           <button
             id="dropdownCitiesButton"
             data-dropdown-toggle="dropdownCities"
@@ -86,22 +90,22 @@
           </div>
 
           <div class="flex items-center">
-          <button
-            id="sidebarToggle"
-            class="toggle-btn shadow bg-white rounded-lg p-2 m-1"
-          >
-            <i class="material-icons">menu</i>
-            <span class="inline">Filter</span>
-          </button>
+            <button
+              id="sidebarToggle"
+              class="toggle-btn shadow bg-white rounded-lg p-2 m-1"
+            >
+              <i class="material-icons">menu</i>
+              <span class="inline">Filter</span>
+            </button>
 
-          <button
-            type="button"
-            class="bg-slate-600 text-white rounded-lg p-2 m-1"
-            id="refresh-button"
-          >
-            <i class="material-icons">shuffle</i>
-            <span class="inline">Generate Crawl</span>
-          </button>
+            <button
+              type="button"
+              class="bg-slate-600 text-white rounded-lg p-2 m-1"
+              id="refresh-button"
+            >
+              <i class="material-icons">shuffle</i>
+              <span class="inline">Generate Crawl</span>
+            </button>
           </div>
         </div>
 
@@ -214,7 +218,6 @@
         </div>
       </div>
     </div>
-  </div>
     <div class="loading-overlay"></div>
     <div class="loading-spinner"></div>
   </body>

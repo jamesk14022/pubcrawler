@@ -6,7 +6,7 @@ import { selectStartEvent } from "./client.js";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
-import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css"; 
+import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
 
 // token scoped and safe for FE use
 mapboxgl.accessToken = MAPBOX_TOKEN;
@@ -18,7 +18,9 @@ export const map = new mapboxgl.Map({
   zoom: 12,
 });
 
-map.once('idle', function () { map.resize() })
+map.once("idle", function () {
+  map.resize();
+});
 
 const directions = new MapboxDirections({
   accessToken: mapboxgl.accessToken,
@@ -176,14 +178,12 @@ export function flyToLocation(location) {
 }
 
 export function renderMapRoute(waypoints) {
-
   removeExistingRoute();
 
   directions.setOrigin([
     waypoints[0].geometry.location.lng,
     waypoints[0].geometry.location.lat,
   ]);
-
 
   directions.setDestination([
     waypoints[waypoints.length - 1].geometry.location.lng,

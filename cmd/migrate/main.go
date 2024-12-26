@@ -88,7 +88,7 @@ func main() {
 		}
 
 		for i, row := range R {
-			for j, _ := range row {
+			for j := range row {
 
 				R[i][j].City = location
 				R[i][j].Point1 = enrichedData[i].PlaceID

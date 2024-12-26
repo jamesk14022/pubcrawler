@@ -14,8 +14,8 @@ migrate_flatfiles:
 	go run cmd/migrate/main.go
 
 format: 
-	go fmt ./...
-	npx prettier --write . --ignore-path .prettierignore 
+	gofmt -s -w .
+	cd web/src && npx prettier --write . --ignore-path .prettierignore 
 
 tailwind:
-	cd web/static/src && npx tailwindcss -i ./styles.css -o ../dist/output.css --watch
+	cd web/src && npx tailwindcss -i ./styles.css -o ../dist/output.css --watch

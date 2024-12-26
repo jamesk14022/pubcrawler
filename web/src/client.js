@@ -251,7 +251,7 @@ function addCityLocations() {
 export async function setCity(e) {
   hideDropdownCities();
   hidePill();
-  
+
   let cityName = e.target.dataset.city;
   currentLocation = cityName;
   selectedFirstLocation = "";

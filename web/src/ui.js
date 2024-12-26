@@ -183,7 +183,12 @@ export function clearBarInformationBox() {
 
 export function renderBarInformationBox(waypoint, index) {
   const barInfoDiv = document.createElement("div");
-  barInfoDiv.classList.add("min-w-[200px]", "sm:min-w-[160px]", "max-w-[350px]", "inline");
+  barInfoDiv.classList.add(
+    "min-w-[200px]",
+    "sm:min-w-[160px]",
+    "max-w-[350px]",
+    "inline",
+  );
 
   const input = document.createElement("input");
   input.type = "button";
