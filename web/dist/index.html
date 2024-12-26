@@ -20,16 +20,16 @@
     />
     <script defer src="bundle.js"></script>
   </head>
-  <body><div id="container" class="1xl:container"></div>
-         <div class="modal hidden" id="no-results">
-          <div class="modal_content mx-auto mt-60 w-64 h-56 relative text-center shadow-lg border-2	border-gray-600 rounded-md p-10 z-50 bg-slate-300">
+  <body><div id="container" class="1xl:container">
+         <div class="modal hidden absolute top-0 left-0 h-full w-full justify-center" id="no-results">
+          <div class="modal_content mx-auto mt-72 w-64 h-64 relative text-center shadow-lg border-2	border-white rounded-lg p-10 z-50 bg-slate-300">
             <p id="no_pubs">
               No routes found within the specified distance. Please try
               adjusting the distance or number of pubs.
             </p>
               <button
                 id="modal-exit"
-                class="shadow bg-white rounded-lg p-2 mt-2"
+                class="shadow bg-white rounded-lg p-2 mt-6"
               >
                 Close
               </button>
@@ -214,7 +214,7 @@
         </div>
       </div>
     </div>
-
+  </div>
     <div class="loading-overlay"></div>
     <div class="loading-spinner"></div>
   </body>

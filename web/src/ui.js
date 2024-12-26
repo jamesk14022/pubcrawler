@@ -38,7 +38,7 @@ export const setMarkersDisplay = (markers) => {
 export function showLoading() {
   document.querySelector(".loading-spinner").style.display = "block";
   document.querySelector(".loading-overlay").style.display = "block";
-  container.classList.add("blurred");
+  // container.classList.add("blurred");
 }
 
 const hideRightBar = () => (rightBar.style.display = "none");
@@ -47,7 +47,7 @@ export const showRightBar = () => (rightBar.style.display = "block");
 export function hideLoading() {
   document.querySelector(".loading-spinner").style.display = "none";
   document.querySelector(".loading-overlay").style.display = "none";
-  container.classList.remove("blurred");
+  // container.classList.remove("blurred");
 }
 
 export function toggleNoPubsResults() {

@@ -259,20 +259,6 @@ html {
   transform: rotate(-45deg);
   background-color: red;
 }
-.modal {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-}
-
-.modal.hidden {
-  display: none;
-}
 
 #exit {
   display: block;
@@ -287,14 +273,6 @@ html {
     Arial,
     Helvetica,
     sans-serif;
-}
-.toggle-btn {
-  /* color: black;
-  font-size: 30px;
-  cursor: pointer;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px; */
 }
 
 .marker-label {
