@@ -9,6 +9,27 @@ function containsObject(obj, list) {
   return false;
 }
 
+function buildGoogleMapsURL(waypoints, waypoint_place_ids) {
+  waypoints = waypoints.map((waypoint) => encodeURIComponent(waypoint));
+
+  const origin = waypoints[0];
+  const origin_place_id = waypoint_place_ids[0];
+  const destination = waypoints[waypoints.length - 1];
+  const destination_place_id = waypoint_place_ids[waypoints.length - 1];
+  const travelmode = "walking";
+
+  let url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&origin_place_id=${origin_place_id}&destination=${destination}&destination_place_id=${destination_place_id}&travelmode=${travelmode}`;
+
+  if (waypoints.length > 2) {
+    url += "&waypoints=";
+    url += waypoints.slice(1, waypoints.length - 1).join("|");
+    url += "&waypoint_place_ids=";
+    url += waypoint_place_ids.slice(1, waypoint_place_ids.length - 1).join("|");
+  }
+
+  return url;
+}
+
 function copy(text) {
   return new Promise((resolve, reject) => {
     // 1) Modern Clipboard API approach
@@ -101,4 +122,10 @@ function convertToGeoJSON(dataArray) {
   };
 }
 
-export { containsObject, copy, updateURL, convertToGeoJSON };
+export {
+  containsObject,
+  copy,
+  updateURL,
+  convertToGeoJSON,
+  buildGoogleMapsURL,
+};

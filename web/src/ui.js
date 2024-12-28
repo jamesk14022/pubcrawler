@@ -1,7 +1,7 @@
 import {
-  container,
   refreshButton,
   shareButton,
+  googleMapsButton,
   modalExitButton,
   noPubsConent,
   rightBar,
@@ -183,6 +183,7 @@ export function clearBarInformationBox() {
 
 export function renderBarInformationBox(waypoint, index) {
   const barInfoDiv = document.createElement("div");
+
   barInfoDiv.classList.add(
     "min-w-[200px]",
     "sm:min-w-[160px]",
@@ -206,6 +207,8 @@ export function renderBarInformationBox(waypoint, index) {
     "min-h-[110px]",
     "max-h-[150px]",
     "md:min-h-[90px]",
+    "bg-sky-600",
+    "hover:bg-sky-700",
   );
   label.innerHTML = `<strong>Point ${String.fromCharCode(
     65 + index,
@@ -245,6 +248,10 @@ export function renderBarInformationBox(waypoint, index) {
 
 export function setupShareButtonEvents(onShareButtonClicked) {
   shareButton.addEventListener("click", onShareButtonClicked);
+}
+
+export function setupGoogleMapsButtonEvents(onGoogleMapsButtonClicked) {
+  googleMapsButton.addEventListener("click", onGoogleMapsButtonClicked);
 }
 
 export function setShareButtonCopied() {

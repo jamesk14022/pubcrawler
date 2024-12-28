@@ -1,5 +1,10 @@
 import { TIME_SPENT_BAR, maximumLocationCount } from "./constants.js";
-import { containsObject, copy, updateURL } from "./utils.js";
+import {
+  containsObject,
+  copy,
+  updateURL,
+  buildGoogleMapsURL,
+} from "./utils.js";
 import { getCityPoints, postCrawl, getCities, getPubs } from "./api.js";
 import {
   clearBarInformationBox,
@@ -7,6 +12,7 @@ import {
   populateCityList,
   setShareButtonCopied,
   setupShareButtonEvents,
+  setupGoogleMapsButtonEvents,
   setupRefreshButtonEvents,
   setupModalExitButtonEvents,
   setRouteDuration,
@@ -49,9 +55,19 @@ let selectedFirstLocationType = "";
 let selectedPubs = 3;
 let selectedAttractions = 1;
 let cityPoints = {};
+let waypoints = [];
 
 setupShareButtonEvents(() => {
   copyShareLink();
+});
+
+setupGoogleMapsButtonEvents(() => {
+  window.open(
+    buildGoogleMapsURL(
+      waypoints.map((waypoint) => waypoint.name),
+      waypoints.map((waypoint) => waypoint.place_id),
+    ),
+  );
 });
 
 setupPubPlusMinusEvents(
@@ -103,6 +119,22 @@ setupFilterResetEvent(() => {
   selectedPubs = 3;
   setMarkersDisplay(selectedPubs);
 });
+
+async function getNewCrawl(
+  selectedPubs,
+  selectedAttractions,
+  currentLocation,
+  selectedFirstLocation,
+) {
+  waypoints = await getPubs(
+    selectedPubs,
+    selectedAttractions,
+    currentLocation,
+    selectedFirstLocation,
+  );
+
+  return waypoints;
+}
 
 export function selectStartEvent(place_id, place_name, type) {
   if (type === "attraction" && selectedAttractions === 0) {
@@ -191,8 +223,9 @@ async function pageStart() {
     currentLocation = location.toLowerCase();
 
     map.on("load", async function () {
-      let waypoints = await postCrawl(currentLocation, markers);
+      waypoints = await postCrawl(currentLocation, markers);
       selectedPubs = targetPubs;
+      selectedAttractions = targetAttractions;
       updateRouteMetrics();
       await renderRoute(waypoints);
       hideLoading();
@@ -201,7 +234,7 @@ async function pageStart() {
     map.on("load", async function () {
       clearExistingRoute();
       showLoading();
-      let waypoints = await getPubs(
+      waypoints = await getNewCrawl(
         selectedPubs,
         selectedAttractions,
         currentLocation,
@@ -259,7 +292,7 @@ export async function setCity(e) {
   flyToLocation(cityPoints[cityName]);
   clearExistingRoute();
   showLoading();
-  let waypoints = await getPubs(
+  waypoints = await getNewCrawl(
     selectedPubs,
     selectedAttractions,
     currentLocation,
@@ -280,7 +313,7 @@ setupPillClosedEvents(async () => {
 setupRefreshButtonEvents(async () => {
   clearExistingRoute();
   showLoading();
-  let waypoints = await getPubs(
+  waypoints = await getNewCrawl(
     selectedPubs,
     selectedAttractions,
     currentLocation,

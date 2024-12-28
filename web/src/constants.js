@@ -18,6 +18,7 @@ const INITIAL_LOCATION = [-6.2603, 53.3498];
 const container = document.getElementById("container");
 const refreshButton = document.getElementById("refresh-button");
 const shareButton = document.getElementById("shareButton");
+const googleMapsButton = document.getElementById("googleMapsButton");
 const searchBox = document.getElementById("search-box");
 const modalExitButton = document.getElementById("modal-exit");
 const noPubsConent = document.getElementById("no-results");
@@ -57,6 +58,7 @@ export {
   container,
   refreshButton,
   shareButton,
+  googleMapsButton,
   searchBox,
   modalExitButton,
   noPubsConent,
