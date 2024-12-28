@@ -10,7 +10,7 @@ const BASE_URL =
     ? "http://localhost:8080"
     : "https://pubcrawler.app";
 
-const GOOGLE_MAP_BASE_URL = "https://www.google.com/maps/search";
+const GOOGLE_MAP_BASE_URL = "https://www.google.com/maps";
 
 const maximumLocationCount = 5;
 const INITIAL_LOCATION = [-6.2603, 53.3498];

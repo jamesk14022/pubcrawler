@@ -1,3 +1,5 @@
+import { GOOGLE_MAP_BASE_URL } from "./constants";
+
 function containsObject(obj, list) {
   var i;
   for (i = 0; i < list.length; i++) {
@@ -18,7 +20,7 @@ function buildGoogleMapsURL(waypoints, waypoint_place_ids) {
   const destination_place_id = waypoint_place_ids[waypoints.length - 1];
   const travelmode = "walking";
 
-  let url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&origin_place_id=${origin_place_id}&destination=${destination}&destination_place_id=${destination_place_id}&travelmode=${travelmode}`;
+  let url = `${GOOGLE_MAP_BASE_URL}/dir/?api=1&origin=${origin}&origin_place_id=${origin_place_id}&destination=${destination}&destination_place_id=${destination_place_id}&travelmode=${travelmode}`;
 
   if (waypoints.length > 2) {
     url += "&waypoints=";

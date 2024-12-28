@@ -48,13 +48,13 @@
         </header>
 
         <div
-          class="bg-sky-600 h-15 flex items-center justify-between py-2 px-1 text-xs sm:text-base"
+          class="bg-sky-600 h-15 flex items-center justify-between py-2 px-1 text-xs sm:text-lg"
         >
           <button
             id="dropdownCitiesButton"
             data-dropdown-toggle="dropdownCities"
             data-dropdown-placement="bottom"
-            class="shadow bg-white p-2 m-1 font-medium rounded-lg text-sm px-5 py-2.5 md:basis-1/5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            class="shadow bg-white p-2 m-1 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             type="button"
           >
             Select a city
@@ -95,18 +95,18 @@
           <div class="flex items-center">
             <button
               id="sidebarToggle"
-              class="toggle-btn flex items-center shadow bg-white rounded-lg p-2 m-1"
+              class="toggle-btn flex items-center shadow bg-white rounded-lg p-3 m-1"
             >
-              <i class="material-icons mr-1 sm:mr-2">menu</i>
+              <i class="material-icons mx-1 sm:mx-2">menu</i>
               <span class="inline">Filter</span>
             </button>
 
             <button
               type="button"
-              class="flex items-center bg-slate-600 text-white rounded-lg p-2 m-1"
+              class="flex items-center bg-slate-600 text-white rounded-lg p-3 m-1"
               id="refresh-button"
             >
-              <i class="material-icons mr-1 sm:mr-2">shuffle</i>
+              <i class="material-icons mx-1 sm:mx-2">shuffle</i>
               <span class="inline">Generate Crawl</span>
             </button>
           </div>
@@ -166,12 +166,12 @@
 
         <div
           id="secondaryBar"
-          class="bg-slate-300 py-2 px-1 flex flex-col justify-between md:flex-row text-xs md:text-base"
+          class="bg-slate-300 py-2 px-1 flex flex-col justify-between md:flex-row text-xs md:text-sm"
         >
           <div class="flex md:basis-2/5">
             <button
               id="shareButton"
-              class="bg-slate-50 rounded-lg p-2 m-1 mb-2 shadow-sm inline-flex items-center justify-center basis-3/6"
+              class="bg-slate-50 rounded-lg py-2 m-1 mb-2 shadow-sm inline-flex items-center justify-center basis-3/6"
               type="button"
             >
               <i class="material-icons mr-2">content_copy</i>Copy sharing link
@@ -179,7 +179,7 @@
 
             <button
               id="googleMapsButton"
-              class="bg-slate-50 rounded-lg p-2 m-1 mb-2 shadow-sm inline-flex items-center justify-center basis-3/6"
+              class="bg-slate-50 rounded-lg py-2 m-1 mb-2 shadow-sm inline-flex items-center justify-center basis-3/6"
               type="button"
             >
               <i class="material-icons mr-2">map</i>Open in Google Maps
@@ -211,7 +211,7 @@
               <div class="info-emblem flex items-center pl-1 pr-2">
                 <i class="fas fa-info-circle"></i>
                 <span class="tooltip-text"
-                  >Pub crawl distances are calculated assuming you spend 30
+                  >Pub crawl durations are calculated assuming you spend 30
                   minutes at each bar / attraction.</span
                 >
               </div>
