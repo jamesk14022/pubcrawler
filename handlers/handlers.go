@@ -13,7 +13,6 @@ import (
 	"strings"
 	"sync"
 
-	// . "github.com/jamesk14022/barcrawler/cache"
 	config "github.com/jamesk14022/barcrawler/config"
 	dbprovider "github.com/jamesk14022/barcrawler/database"
 	"github.com/jamesk14022/barcrawler/types"
@@ -285,19 +284,6 @@ func GetRandomCrawl(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 
-	// key := GenerateKey(location, targetPubs, targetAttractions) + "3"
-
-	// item, ok := RouteCache.Load(key)
-	// if ok {
-	// 	cacheItem := item.(CacheItem)
-	// 	if len(cacheItem.Values) >= CacheSize {
-	// 		randomIndex := rand.Intn(len(cacheItem.Values))
-	// 		fmt.Println("Cache hit: ", key, cacheItem.Values[randomIndex])
-	// 		json.NewEncoder(w).Encode(cacheItem.Values[randomIndex])
-	// 		return
-	// 	}
-	// }
-
 	enrichedData, _, err := LoadLocationInformation(location)
 	if err != nil {
 		log.Printf("Error loading location information: %v", err)
@@ -315,8 +301,7 @@ func GetRandomCrawl(w http.ResponseWriter, r *http.Request) error {
 		for i, p := range path {
 			selectedLocations[i] = *findPlaceByID(enrichedData, p)
 		}
-		// AddToCache(key, selectedLocations)
-		// SaveCache()
+
 		json.NewEncoder(w).Encode(selectedLocations)
 	}
 	return nil
