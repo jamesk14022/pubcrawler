@@ -53,7 +53,7 @@ let currentMarkers = [];
 let selectedFirstLocation = "";
 let selectedFirstLocationType = "";
 let selectedPubs = 3;
-let selectedAttractions = 1;
+let selectedAttractions = 0;
 let cityPoints = {};
 let waypoints = [];
 

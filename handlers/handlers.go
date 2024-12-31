@@ -15,15 +15,14 @@ import (
 
 	config "github.com/jamesk14022/barcrawler/config"
 	dbprovider "github.com/jamesk14022/barcrawler/database"
-	"github.com/jamesk14022/barcrawler/types"
-	. "github.com/jamesk14022/barcrawler/types"
+	types "github.com/jamesk14022/barcrawler/types"
 	"github.com/jamesk14022/barcrawler/utils"
 )
 
 const MaxReturnPaths = 500000
 
 var locationDataDir = os.Getenv("LOCATION_DATA_DIR")
-var emptyResponse = make([]Place, 0)
+var emptyResponse = make([]types.Place, 0)
 var cm = config.NewConfigManager()
 
 func CheckAvailableLocations() map[string][2]float64 {
@@ -49,15 +48,15 @@ func CheckAvailableLocations() map[string][2]float64 {
 	return cityCoordinates
 }
 
-func LoadLocationInformation(location string) ([]Place, []Route, error) {
+func LoadLocationInformation(location string) ([]types.Place, []types.Route, error) {
 	var availableLocations = utils.GetKeys(CheckAvailableLocations())
 	if !utils.Contains(availableLocations, location) {
 		log.Printf("Location not found: %v", location)
 		return nil, nil, errors.New("location not found")
 	} else {
 
-		var enrichedData []Place
-		var R []Route
+		var enrichedData []types.Place
+		var R []types.Route
 
 		log.Printf("Loading location information for %v", location)
 		enrichedData = dbprovider.Mgr.FindPlacesByCity(location)
@@ -84,7 +83,7 @@ func CheckOverlap(path []string) bool {
 	return false
 }
 
-func CheckFirstLocation(path []string, enrichedData []Place, targetFirstLocation string) bool {
+func CheckFirstLocation(path []string, enrichedData []types.Place, targetFirstLocation string) bool {
 	return path[0] == targetFirstLocation
 }
 
@@ -119,7 +118,7 @@ func EqualLengthMeetConstraint(path []string, pathDistance float64, alpha float6
 	return true
 }
 
-func checkAttractionContraints(path []int, enrichedData []Place, targetAttractions int) bool {
+func checkAttractionContraints(path []int, enrichedData []types.Place, targetAttractions int) bool {
 	attractions := 0
 	for _, p := range path {
 		if utils.Contains(enrichedData[p].Types, "tourist_attraction") {
@@ -129,7 +128,7 @@ func checkAttractionContraints(path []int, enrichedData []Place, targetAttractio
 	return attractions == targetAttractions
 }
 
-func getEligiblePaths(size int, targetPubs int, targetAttractions int, enrichedData []Place) ([][]string, []float64) {
+func getEligiblePaths(size int, targetPubs int, targetAttractions int, enrichedData []types.Place) ([][]string, []float64) {
 	var city = enrichedData[0].City
 	var eligiblePaths [][]int
 	var distances []float64
@@ -295,7 +294,7 @@ func GetRandomCrawl(w http.ResponseWriter, r *http.Request) error {
 		json.NewEncoder(w).Encode(emptyResponse)
 	} else {
 		path := eligiblePaths[rand.Intn(len(eligiblePaths))]
-		var selectedLocations = make([]Place, len(path))
+		var selectedLocations = make([]types.Place, len(path))
 
 		for i, p := range path {
 			selectedLocations[i] = *findPlaceByID(enrichedData, p)
@@ -306,14 +305,14 @@ func GetRandomCrawl(w http.ResponseWriter, r *http.Request) error {
 	return nil
 }
 
-func generateRoute(enrichedData []Place, targetPubs int, targetAttractions int, targetFirstLocation string) [][]string {
+func generateRoute(enrichedData []types.Place, targetPubs int, targetAttractions int, targetFirstLocation string) [][]string {
 
 	city := enrichedData[0].City
 	size := len(enrichedData)
 	eligiblePaths, distances := getEligiblePaths(size, targetPubs, targetAttractions, enrichedData)
 	log.Println("Number of eligible paths: ", len(eligiblePaths))
 	if targetFirstLocation != "" {
-		eligiblePaths = filterPathsLocations(eligiblePaths, enrichedData, func(e []string, f []Place) bool {
+		eligiblePaths = filterPathsLocations(eligiblePaths, enrichedData, func(e []string, f []types.Place) bool {
 			return CheckFirstLocation(e, enrichedData, targetFirstLocation)
 		})
 	}
@@ -334,7 +333,7 @@ func generateRoute(enrichedData []Place, targetPubs int, targetAttractions int, 
 }
 
 func PostCrawl(w http.ResponseWriter, r *http.Request) error {
-	var ids PlaceIDs
+	var ids types.PlaceIDs
 	location := strings.ToLower((r.URL.Query().Get("location")))
 	err := json.NewDecoder(r.Body).Decode(&ids)
 	if err != nil {
@@ -348,7 +347,7 @@ func PostCrawl(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 
-	var selectedLocations = make([]Place, len(ids.PlaceIDs))
+	var selectedLocations = make([]types.Place, len(ids.PlaceIDs))
 	for i, id := range ids.PlaceIDs {
 		for _, loc := range enrichedData {
 			if loc.PlaceID == id {
@@ -386,7 +385,7 @@ func filterPaths(paths [][]string, condition func([]string) bool) [][]string {
 	return result
 }
 
-func filterPathsLocations(paths [][]string, enrichedData []Place, condition func([]string, []Place) bool) [][]string {
+func filterPathsLocations(paths [][]string, enrichedData []types.Place, condition func([]string, []types.Place) bool) [][]string {
 	var result [][]string
 	for _, path := range paths {
 		if condition(path, enrichedData) {

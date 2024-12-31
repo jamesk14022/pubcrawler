@@ -35,5 +35,4 @@ type Admin struct {
 }
 
 type Step struct {
-	// Define fields here if steps contain more details
 }
