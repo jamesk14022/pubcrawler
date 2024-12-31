@@ -50,7 +50,6 @@ func CheckAvailableLocations() map[string][2]float64 {
 }
 
 func LoadLocationInformation(location string) ([]Place, []Route, error) {
-
 	var availableLocations = utils.GetKeys(CheckAvailableLocations())
 	if !utils.Contains(availableLocations, location) {
 		log.Printf("Location not found: %v", location)

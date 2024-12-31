@@ -31,6 +31,7 @@ func enableCORS(next http.Handler) http.Handler {
 
 type routeHandler func(http.ResponseWriter, *http.Request) error
 
+// ServeHTTP allows our routeHandler type to satisfy http.Handler interface.
 func (fn routeHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := fn(w, r); err != nil {
 		http.Error(w, err.Error(), 500)
