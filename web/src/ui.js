@@ -210,11 +210,12 @@ export function renderBarInformationBox(waypoint, index) {
     "bg-sky-600",
     "hover:bg-sky-700",
   );
- 
+
   var icon = waypoint.types.includes("tourist_attraction") ? "🎡" : "🍺";
-  
+
   label.innerHTML = `<span class="whitespace-pre">${icon} <strong>Point ${String.fromCharCode(
-    65 + index)}</strong></span><br>${waypoint.name}`;
+    65 + index,
+  )}</strong></span><br>${waypoint.name}`;
 
   const ratingDiv = document.createElement("div");
   for (let i = 0; i < parseFloat(waypoint.rating); i++) {

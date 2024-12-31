@@ -29,17 +29,25 @@ func enableCORS(next http.Handler) http.Handler {
 	})
 }
 
+type routeHandler func(http.ResponseWriter, *http.Request) error
+
+func (fn routeHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if err := fn(w, r); err != nil {
+		http.Error(w, err.Error(), 500)
+	}
+}
+
 func main() {
 
 	cache.InitCache()
 
 	router := mux.NewRouter()
 
-	router.HandleFunc("/cities", handlers.GetCityCoordinates).Methods("GET")
-	router.HandleFunc("/pubs", handlers.GetRandomCrawl).Methods("GET")
-	router.HandleFunc("/citypoints", handlers.GetAllCityPoints).Methods("GET")
-	router.HandleFunc("/crawl", handlers.PostCrawl).Methods("POST")
-	router.HandleFunc("/photo", handlers.GetPhoto).Methods("GET")
+	router.Handle("/cities", routeHandler(handlers.GetCityCoordinates)).Methods("GET")
+	router.Handle("/pubs", routeHandler(handlers.GetRandomCrawl)).Methods("GET")
+	router.Handle("/citypoints", routeHandler(handlers.GetAllCityPoints)).Methods("GET")
+	router.Handle("/crawl", routeHandler(handlers.PostCrawl)).Methods("POST")
+	router.Handle("/photo", routeHandler(handlers.GetPhoto)).Methods("GET")
 
 	router.
 		PathPrefix("/").

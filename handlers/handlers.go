@@ -4,7 +4,6 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"log"
 	"math/rand"
@@ -55,16 +54,15 @@ func LoadLocationInformation(location string) ([]Place, []Route, error) {
 
 	var availableLocations = utils.GetKeys(CheckAvailableLocations())
 	if !utils.Contains(availableLocations, location) {
-		fmt.Println("Location not found")
+		log.Printf("Location not found: %v", location)
 		return nil, nil, errors.New("location not found")
 	} else {
 
 		var enrichedData []Place
 		var R []Route
 
-		fmt.Println("Loading location information")
+		log.Printf("Loading location information for %v", location)
 		enrichedData = dbprovider.Mgr.FindPlacesByCity(location)
-		fmt.Println("find routes by city")
 		R = dbprovider.Mgr.FindRoutesByCity(location)
 		return enrichedData, R, nil
 	}
@@ -225,35 +223,30 @@ func extractURLParams(r *http.Request) (int, int, string, string, error) {
 	return targetAttractions, targetPubs, targetFirstLocation, location, nil
 }
 
-func GetCityCoordinates(w http.ResponseWriter, r *http.Request) {
+func GetCityCoordinates(w http.ResponseWriter, r *http.Request) error {
 	cityCoordinates := CheckAvailableLocations()
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(cityCoordinates)
+	return nil
 }
 
-func GetPhoto(w http.ResponseWriter, r *http.Request) {
+func GetPhoto(w http.ResponseWriter, r *http.Request) error {
 	photoReference := r.URL.Query().Get("photo_reference")
 	if photoReference == "" {
-		http.Error(w, "photo_reference is required", http.StatusBadRequest)
-		return
+		return errors.New("photo_reference is required")
 	}
 
 	url := "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=" + photoReference + "&key=" + os.Getenv("GOOGLE_MAPS_API_KEY")
-	fmt.Println(url)
 	resp, err := http.Get(url)
-	fmt.Println(resp)
 	if err != nil {
-		http.Error(w, "Failed to fetch photo: "+err.Error(), http.StatusInternalServerError)
-		return
+		return err
 	}
 	defer resp.Body.Close()
 
 	// Read the response body into a byte slice
 	bodyBytes, err := io.ReadAll(resp.Body)
-	fmt.Println(resp.Body)
 	if err != nil {
-		http.Error(w, "Failed to read response: "+err.Error(), http.StatusInternalServerError)
-		return
+		return err
 	}
 
 	// Create a response object
@@ -269,8 +262,9 @@ func GetPhoto(w http.ResponseWriter, r *http.Request) {
 	// Write the JSON response
 	err = json.NewEncoder(w).Encode(responseObject)
 	if err != nil {
-		http.Error(w, "Failed to encode JSON response: "+err.Error(), http.StatusInternalServerError)
+		return err
 	}
+	return nil
 }
 
 func findPlaceByID(places []types.Place, placeID string) *types.Place {
@@ -282,14 +276,13 @@ func findPlaceByID(places []types.Place, placeID string) *types.Place {
 	return nil
 }
 
-func GetRandomCrawl(w http.ResponseWriter, r *http.Request) {
+func GetRandomCrawl(w http.ResponseWriter, r *http.Request) error {
 
 	w.Header().Set("Content-Type", "application/json")
 
 	targetAttractions, targetPubs, targetFirstLocation, location, err := extractURLParams(r)
 	if err != nil {
-		fmt.Println("Error extracting URL params", err)
-		json.NewEncoder(w).Encode(emptyResponse)
+		return err
 	}
 
 	// key := GenerateKey(location, targetPubs, targetAttractions) + "3"
@@ -307,8 +300,8 @@ func GetRandomCrawl(w http.ResponseWriter, r *http.Request) {
 
 	enrichedData, _, err := LoadLocationInformation(location)
 	if err != nil {
-		fmt.Println("Error loading location information", err)
-		json.NewEncoder(w).Encode(emptyResponse)
+		log.Printf("Error loading location information: %v", err)
+		return err
 	}
 
 	eligiblePaths := generateRoute(enrichedData, targetPubs, targetAttractions, targetFirstLocation)
@@ -326,6 +319,7 @@ func GetRandomCrawl(w http.ResponseWriter, r *http.Request) {
 		// SaveCache()
 		json.NewEncoder(w).Encode(selectedLocations)
 	}
+	return nil
 }
 
 func generateRoute(enrichedData []Place, targetPubs int, targetAttractions int, targetFirstLocation string) [][]string {
@@ -333,7 +327,7 @@ func generateRoute(enrichedData []Place, targetPubs int, targetAttractions int, 
 	city := enrichedData[0].City
 	size := len(enrichedData)
 	eligiblePaths, distances := getEligiblePaths(size, targetPubs, targetAttractions, enrichedData)
-	fmt.Println("Number of eligible paths: ", len(eligiblePaths))
+	log.Println("Number of eligible paths: ", len(eligiblePaths))
 	if targetFirstLocation != "" {
 		eligiblePaths = filterPathsLocations(eligiblePaths, enrichedData, func(e []string, f []Place) bool {
 			return CheckFirstLocation(e, enrichedData, targetFirstLocation)
@@ -355,19 +349,19 @@ func generateRoute(enrichedData []Place, targetPubs int, targetAttractions int, 
 	return eligiblePaths
 }
 
-func PostCrawl(w http.ResponseWriter, r *http.Request) {
+func PostCrawl(w http.ResponseWriter, r *http.Request) error {
 	var ids PlaceIDs
 	location := strings.ToLower((r.URL.Query().Get("location")))
 	err := json.NewDecoder(r.Body).Decode(&ids)
 	if err != nil {
-		fmt.Println("Error parsing markers")
+		log.Printf("Error parsing markers %v", err)
+		return err
 	}
 
 	enrichedData, _, err := LoadLocationInformation(location)
-	var emptyResponse = make([]Place, 0)
 	if err != nil {
-		fmt.Println("Error loading location information")
-		json.NewEncoder(w).Encode(emptyResponse)
+		log.Printf("Error loading location information: %v", err)
+		return err
 	}
 
 	var selectedLocations = make([]Place, len(ids.PlaceIDs))
@@ -382,17 +376,20 @@ func PostCrawl(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(selectedLocations)
+	return nil
 }
 
-func GetAllCityPoints(w http.ResponseWriter, r *http.Request) {
+func GetAllCityPoints(w http.ResponseWriter, r *http.Request) error {
 	location := strings.ToLower((r.URL.Query().Get("location")))
 	enrichedData, _, err := LoadLocationInformation(location)
 	if err != nil {
-		fmt.Println("Error loading location information", err)
+		log.Printf("Error loading location information: %v", err)
+		return err
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(enrichedData)
+	return nil
 }
 
 func filterPaths(paths [][]string, condition func([]string) bool) [][]string {

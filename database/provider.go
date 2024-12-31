@@ -1,7 +1,6 @@
 package dbprovider
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/jamesk14022/barcrawler/types"
@@ -177,7 +176,7 @@ func (mgr *manager) buildDistanceCache() {
 
 	}
 	mgr.DistanceCache = distanceMap
-	fmt.Println("Distance cache built")
+	log.Printf("Distance cache built with %d cities", len(uniqueCities))
 }
 
 func (mgr *manager) FindCachedRouteBetweenPlaces(start_placeID string, end_placeID string) types.Route {
